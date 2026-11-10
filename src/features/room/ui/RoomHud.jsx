@@ -161,13 +161,13 @@ export default function RoomHud({ ready, struggling }) {
               showAction ? 'bg-accent text-on-accent' : 'bg-raised text-muted'
             }`}
           >
-            {showAction && !coarse ? t('room.press') : t('room.tap')}
+            {coarse ? t('room.tap') : showAction ? t('room.press') : t('room.click')}
           </span>
         </div>
       </div>
 
       {/* Keyboard and screen reader route into the same destinations */}
-      <nav aria-label={t('room.destinations')} className="absolute bottom-4 left-4 z-20">
+      <nav aria-label={t('room.destinations')} className="absolute bottom-8 left-4 z-20">
         <ul className="flex flex-wrap gap-2">
           {INTERACTABLES.map((item) => (
             <li key={item.id}>
@@ -187,7 +187,7 @@ export default function RoomHud({ ready, struggling }) {
 
       {/* Controls hint */}
       {ready && !hintSeen && !activeId && (
-        <div className="absolute inset-x-0 bottom-5 z-10 flex justify-center px-4">
+        <div className="absolute inset-x-0 bottom-5 z-10 flex justify-center pl-4 pr-24 sm:px-24">
           <div className="flex max-w-xl items-center gap-3 rounded-2xl border border-line bg-surface/95 py-2 pl-4 pr-2 text-sm shadow-card backdrop-blur">
             <p>{coarse ? t('room.hint_touch') : t('room.hint_desktop')}</p>
             <button
@@ -202,7 +202,7 @@ export default function RoomHud({ ready, struggling }) {
       )}
 
       {struggling && (
-        <div className="absolute inset-x-0 top-36 z-10 flex justify-center px-4 sm:top-20">
+        <div className="absolute inset-x-0 bottom-24 z-10 flex justify-center px-4">
           <button
             type="button"
             onClick={() => setChoice('lite')}
@@ -214,7 +214,7 @@ export default function RoomHud({ ready, struggling }) {
       )}
 
       {backend && (
-        <p className="pointer-events-none absolute bottom-2 right-3 z-10 font-mono text-[10px] uppercase tracking-widest text-muted/70">
+        <p className="pointer-events-none absolute bottom-2 left-4 z-10 font-mono text-[10px] uppercase tracking-widest text-muted/70">
           {t('room.renderer', { backend })}
         </p>
       )}

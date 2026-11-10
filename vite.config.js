@@ -9,6 +9,11 @@ const base = process.env.VITE_BASE || '/3d_Portfolio/';
 export default defineConfig({
   base,
   plugins: [react(), tailwindcss()],
+  resolve: {
+    // The room renders with three's WebGPU build (which carries its own WebGL 2 fallback).
+    // Pointing every 'three' import at that build keeps the classic WebGL renderer out of the bundle.
+    alias: [{ find: /^three$/, replacement: 'three/webgpu' }],
+  },
   build: {
     target: 'es2022',
     chunkSizeWarningLimit: 900,

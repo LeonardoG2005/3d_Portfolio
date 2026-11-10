@@ -63,6 +63,7 @@ export default {
     hint_dismiss: 'Got it',
     press: 'Press E',
     tap: 'Tap to open',
+    click: 'Click to open',
     renderer: 'Rendering with {backend}',
     labels: {
       projects: 'Projects',

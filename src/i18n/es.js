@@ -63,6 +63,7 @@ export default {
     hint_dismiss: 'Entendido',
     press: 'Presiona E',
     tap: 'Toca para abrir',
+    click: 'Clic para abrir',
     renderer: 'Renderizando con {backend}',
     labels: {
       projects: 'Proyectos',

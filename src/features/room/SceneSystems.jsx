@@ -29,7 +29,8 @@ export function CameraRig() {
       wanted.set(focus[0], focus[1], focus[2]);
       wantedZoom = base * 1.45;
     } else {
-      wanted.set(live.x * follow, 1.1, live.z * follow);
+      // On tall screens look a little higher so the room sits lower, clear of the intro text.
+      wanted.set(live.x * follow, size.height > size.width * 1.2 ? 2.1 : 1.1, live.z * follow);
     }
 
     const ease = 1 - Math.exp(-delta * (activeId ? 3.2 : 4.5));

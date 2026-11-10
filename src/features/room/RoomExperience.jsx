@@ -1,6 +1,6 @@
-import { Canvas, extend, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Component, useCallback, useEffect, useRef, useState } from 'react';
-import * as THREE from 'three/webgpu';
+import { PCFShadowMap, WebGPURenderer } from 'three/webgpu';
 import { useT } from '../../i18n/index.jsx';
 import { isCoarsePointer } from '../../lib/capabilities.js';
 import Character from './Character.jsx';
@@ -12,9 +12,6 @@ import { PALETTES } from './scene/palette.js';
 import { CameraRig, ClickFloor, Interactables, LabelProjector } from './SceneSystems.jsx';
 import { live, resetLive, useRoom } from './store.js';
 import RoomHud from './ui/RoomHud.jsx';
-
-// Register three.js classes (WebGPU build) as JSX elements for React Three Fiber.
-extend(THREE);
 
 const IDLE_AFTER_MS = 20000;
 
@@ -40,6 +37,12 @@ function PerformanceWatch({ onDowngrade, onStruggle }) {
     const s = sample.current;
     if (s.warmup > 0) {
       s.warmup -= delta;
+      return;
+    }
+    // A long gap means the tab was throttled or paused, not that the device is slow.
+    if (delta > 0.25) {
+      s.time = 0;
+      s.frames = 0;
       return;
     }
     s.time += delta;
@@ -132,7 +135,7 @@ export default function RoomExperience({ theme, rendererPref, onNavigate, onFail
   const createRenderer = useCallback(
     async (props) => {
       try {
-        const renderer = new THREE.WebGPURenderer({
+        const renderer = new WebGPURenderer({
           ...props,
           antialias: true,
           alpha: true,
@@ -176,7 +179,7 @@ export default function RoomExperience({ theme, rendererPref, onNavigate, onFail
         <SceneBoundary onError={fail}>
           <Canvas
             orthographic
-            shadows={lowQuality ? false : 'percentage'}
+            shadows={lowQuality ? false : { enabled: true, type: PCFShadowMap }}
             dpr={[1, coarse ? 1.5 : 1.75]}
             frameloop={hidden ? 'never' : awake ? 'always' : 'demand'}
             camera={{ position: [12, 11.3, 12], zoom: 60, near: 0.1, far: 80 }}

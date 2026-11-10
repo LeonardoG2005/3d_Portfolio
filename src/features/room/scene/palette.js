@@ -33,7 +33,7 @@ export const PALETTES = {
     screenBg: '#0c120e',
     hemiSky: '#9fc0b0',
     hemiGround: '#2a1a10',
-    hemiIntensity: 0.75,
+    hemiIntensity: 0.95,
     sun: '#ffe3c4',
     sunIntensity: 1.9,
     lamp: '#ffc98a',

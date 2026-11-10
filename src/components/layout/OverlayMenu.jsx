@@ -39,7 +39,6 @@ export default function OverlayMenu({ open, onClose }) {
       const items = focusables();
       const first = items[0];
       const last = items[items.length - 1];
-      // The menu button in the top bar stays reachable, so it also belongs to the loop.
       if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
         last.focus();
