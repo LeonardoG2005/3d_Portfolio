@@ -9,7 +9,7 @@ import { computeStats } from '../features/github-activity/stats.js';
 import { useContributions } from '../features/github-activity/useContributions.js';
 import { useLanguage } from '../i18n/index.jsx';
 
-const FIRST_YEAR = 2022; // year the GitHub account was created
+const FIRST_YEAR = 2023; // oldest year offered in the selector
 
 function Stat({ label, value, detail }) {
   return (

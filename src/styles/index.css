@@ -63,7 +63,9 @@
   --shadow-card: var(--shadow);
 }
 
-/* ---------- Base ---------- */
+/* ---------- Base ----------
+   Kept in Tailwind layers so utility classes can always override these rules. */
+@layer base {
 html {
   background: var(--bg);
   -webkit-text-size-adjust: 100%;
@@ -103,6 +105,9 @@ a {
   color: inherit;
 }
 
+}
+
+@layer components {
 .label {
   font-family: var(--font-mono);
   font-size: 0.75rem;
@@ -175,6 +180,8 @@ a {
 @keyframes eq {
   from { height: 5px; }
   to { height: 18px; }
+}
+
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -21,7 +21,7 @@ export default function Journey() {
               <Card className="p-6">
                 <p className="label mb-2 flex flex-wrap gap-x-3">
                   <span className="text-accent-ink">{t(`journey.kinds.${entry.kind}`)}</span>
-                  <span>{copy.period}</span>
+                  {copy.period !== t(`journey.kinds.${entry.kind}`) && <span>{copy.period}</span>}
                 </p>
                 <h2 className="text-xl font-semibold">{copy.title}</h2>
                 <p className="mt-1 text-muted">{copy.place}</p>

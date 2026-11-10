@@ -46,7 +46,7 @@ export default {
       projects: { title: 'Proyectos', text: 'Cuatro sistemas que diseñé y construí, desde una plataforma de laboratorio hasta una API multicloud.' },
       skills: { title: 'Habilidades', text: 'Lenguajes, frameworks y herramientas de nube y datos con los que he trabajado.' },
       about: { title: 'Sobre mí', text: 'Quién soy y en qué me gusta trabajar.' },
-      journey: { title: 'Trayectoria', text: 'Formación, certificados y experiencia en proyectos.' },
+      journey: { title: 'Trayectoria', text: 'Formación y certificados.' },
       activity: { title: 'Actividad en GitHub', text: 'Mi calendario de contribuciones, actualizado en vivo.' },
       contact: { title: 'Contacto', text: 'Correo, LinkedIn y GitHub.' },
       cv: { title: 'Mi CV', text: 'Descárgalo en inglés o en español.' },
@@ -276,8 +276,8 @@ export default {
 
   journey: {
     title: 'Trayectoria',
-    subtitle: 'Formación, certificados y la experiencia en proyectos que los respalda.',
-    kinds: { education: 'Formación', experience: 'Experiencia', certificate: 'Certificado' },
+    subtitle: 'Formación y certificados.',
+    kinds: { education: 'Formación', certificate: 'Certificado' },
     see_projects: 'Ver los proyectos',
     items: {
       udem: {
@@ -285,12 +285,6 @@ export default {
         title: 'Ingeniería de Software',
         place: 'Universidad de Medellín, Colombia',
         text: 'Noveno semestre. Cursos de algoritmos y estructuras de datos, diseño orientado a objetos, bases de datos, redes, arquitectura de software, pruebas, seguridad, desarrollo web y móvil, y DevOps.',
-      },
-      projects: {
-        period: '5 años',
-        title: 'Desarrollo de software práctico',
-        place: 'Proyectos académicos, personales y aplicados',
-        text: 'Trabajo full-stack y de backend en equipos con Scrum. Incluye FluxLab, un sistema de gestión de laboratorio de uso diario en el Laboratorio de Biotecnología de la Universidad de Medellín, además de trabajo con bases de datos, análisis de requisitos y evolución de software existente.',
       },
       ielts: {
         period: 'Certificado',

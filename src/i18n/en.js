@@ -46,7 +46,7 @@ export default {
       projects: { title: 'Projects', text: 'Four systems I designed and built, from a lab platform to a multicloud API.' },
       skills: { title: 'Skills', text: 'Languages, frameworks, cloud and data tools I have worked with.' },
       about: { title: 'About me', text: 'Who I am and what I like to work on.' },
-      journey: { title: 'Journey', text: 'Education, certificates and project experience.' },
+      journey: { title: 'Journey', text: 'Education and certificates.' },
       activity: { title: 'GitHub activity', text: 'My contribution calendar, updated live.' },
       contact: { title: 'Contact', text: 'Email, LinkedIn and GitHub.' },
       cv: { title: 'My CV', text: 'Download it in English or Spanish.' },
@@ -276,8 +276,8 @@ export default {
 
   journey: {
     title: 'Journey',
-    subtitle: 'Education, certificates and the project experience behind them.',
-    kinds: { education: 'Education', experience: 'Experience', certificate: 'Certificate' },
+    subtitle: 'Education and certificates.',
+    kinds: { education: 'Education', certificate: 'Certificate' },
     see_projects: 'See the projects',
     items: {
       udem: {
@@ -285,12 +285,6 @@ export default {
         title: 'Software Engineering',
         place: 'Universidad de Medellín, Colombia',
         text: 'Ninth semester. Coursework in algorithms and data structures, object-oriented design, databases, networks, software architecture, testing, security, web and mobile development, and DevOps.',
-      },
-      projects: {
-        period: '5 years',
-        title: 'Hands-on software development',
-        place: 'Academic, personal and applied projects',
-        text: 'Full-stack and backend work in teams using Scrum. It includes FluxLab, a lab management system in daily use at the Biotechnology Laboratory of Universidad de Medellín, plus work with databases, requirements analysis and the evolution of existing software.',
       },
       ielts: {
         period: 'Certificate',

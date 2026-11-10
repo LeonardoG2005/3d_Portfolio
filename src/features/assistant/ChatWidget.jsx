@@ -92,7 +92,7 @@ export default function ChatWidget() {
             exit={{ opacity: 0, y: 12, scale: 0.97 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
             onKeyDown={(event) => event.key === 'Escape' && close()}
-            className="card fixed inset-x-3 bottom-24 z-40 flex max-h-[min(34rem,calc(100dvh-8rem))] origin-bottom-right flex-col overflow-hidden sm:inset-x-auto sm:right-5 sm:w-[23rem]"
+            className="fixed bottom-24 left-3 right-3 z-40 flex max-h-[min(34rem,calc(100dvh-8rem))] origin-bottom-right flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-card sm:left-auto sm:right-5 sm:w-[23rem]"
           >
             <header className="flex items-start justify-between gap-3 border-b border-line px-4 py-3">
               <div>

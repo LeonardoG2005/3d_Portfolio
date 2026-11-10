@@ -10,6 +10,7 @@ const HAIR = '#3b2619';
 const SHIRT = '#f5f3ec';
 const TROUSERS = '#1c4a2a';
 const SHOES = '#20262a';
+const GLASSES = '#14181a';
 
 // Screen-space input to floor-space movement for the isometric camera (camera sits at +x, +z).
 const INV_SQRT2 = Math.SQRT1_2;
@@ -239,6 +240,23 @@ export default function Character() {
               </mesh>
             </group>
           ))}
+          {/* Glasses: two round rims, a bridge and the temples */}
+          {[-0.09, 0.09].map((x) => (
+            <group key={x}>
+              <mesh position={[x, 0.0, 0.252]}>
+                <torusGeometry args={[0.062, 0.011, 8, 20]} />
+                <meshStandardMaterial color={GLASSES} roughness={0.35} metalness={0.2} />
+              </mesh>
+              <mesh position={[x > 0 ? 0.2 : -0.2, 0.005, 0.14]} rotation={[0, x > 0 ? -0.5 : 0.5, 0]}>
+                <boxGeometry args={[0.014, 0.014, 0.24]} />
+                <meshStandardMaterial color={GLASSES} roughness={0.35} metalness={0.2} />
+              </mesh>
+            </group>
+          ))}
+          <mesh position={[0, 0.012, 0.256]}>
+            <boxGeometry args={[0.06, 0.012, 0.012]} />
+            <meshStandardMaterial color={GLASSES} roughness={0.35} metalness={0.2} />
+          </mesh>
           <mesh position={[0, -0.095, 0.232]}>
             <boxGeometry args={[0.07, 0.014, 0.015]} />
             <meshStandardMaterial color="#a8624e" roughness={0.8} />
