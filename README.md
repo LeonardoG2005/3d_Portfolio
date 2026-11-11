@@ -4,11 +4,36 @@ Personal portfolio of Leonardo Guevara Atehortúa. The home page is a small 3D r
 
 Live site: https://leonardog2005.github.io/3d_Portfolio/
 
-## Stack
+## Tech Stack
 
-- React 19 + Vite, JavaScript (JSX)
-- Tailwind CSS 4, Motion for React, React Router, lucide icons
-- three.js through React Three Fiber. The room renders with WebGPU, falls back to WebGL 2, and falls back again to a 2D home when neither is available or the device asks for less motion or data.
+**Core**
+
+![React](https://img.shields.io/badge/React-19-20232A?style=for-the-badge&logo=react&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES2022-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router-8-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white)
+
+**3D**
+
+![Three.js](https://img.shields.io/badge/Three.js-r187-000000?style=for-the-badge&logo=threedotjs&logoColor=white)
+![React Three Fiber](https://img.shields.io/badge/React_Three_Fiber-9-1A1A1A?style=for-the-badge&logo=react&logoColor=white)
+![WebGPU](https://img.shields.io/badge/WebGPU-renderer-005A9C?style=for-the-badge&logo=webgpu&logoColor=white)
+![WebGL 2](https://img.shields.io/badge/WebGL_2-fallback-990000?style=for-the-badge&logo=webgl&logoColor=white)
+![Zustand](https://img.shields.io/badge/Zustand-5-433E38?style=for-the-badge&logoColor=white)
+
+**Interface**
+
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Motion](https://img.shields.io/badge/Motion-14-0055FF?style=for-the-badge&logo=framer&logoColor=white)
+![Lucide](https://img.shields.io/badge/Lucide-icons-F56565?style=for-the-badge&logo=lucide&logoColor=white)
+
+**Testing and delivery**
+
+![Vitest](https://img.shields.io/badge/Vitest-5-6E9F18?style=for-the-badge&logo=vitest&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
+![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-hosting-222222?style=for-the-badge&logo=githubpages&logoColor=white)
+
+The room renders with WebGPU, falls back to WebGL 2, and falls back again to a 2D home when neither is available or the device asks for less motion or data.
 
 ## Run it
 

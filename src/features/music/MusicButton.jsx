@@ -32,15 +32,25 @@ export default function MusicButton() {
 
     const analyser = analyserRef.current;
     const data = new Uint8Array(analyser.frequencyBinCount);
+    // Each band is mapped onto its own recent range (a slowly adapting floor and ceiling), so the bars
+    // swing through their full height on quiet and loud passages alike instead of sitting still.
+    const floors = BANDS.map(() => 255);
+    const ceilings = BANDS.map(() => 0);
+    const levels = BANDS.map(() => 0);
     let frame = 0;
     const tick = () => {
       analyser.getByteFrequencyData(data);
       BANDS.forEach(([from, to], index) => {
         let sum = 0;
         for (let i = from; i < to; i += 1) sum += data[i];
-        const level = Math.min(1, (sum / (to - from) / 255) * 1.35);
-        // Keep a small floor so a quiet passage still reads as "on".
-        bars[index].style.setProperty('--level', (0.18 + level * 0.82).toFixed(3));
+        const raw = sum / (to - from);
+        floors[index] = raw < floors[index] ? raw : floors[index] + (raw - floors[index]) * 0.02;
+        ceilings[index] = raw > ceilings[index] ? raw : ceilings[index] - (ceilings[index] - raw) * 0.02;
+        const span = Math.max(ceilings[index] - floors[index], 18);
+        const target = Math.min(1, Math.max(0, (raw - floors[index]) / span));
+        // Fast rise, slower fall: lively without flickering.
+        levels[index] = target > levels[index] ? target : levels[index] * 0.8 + target * 0.2;
+        bars[index].style.setProperty('--level', (0.06 + levels[index] * 0.94).toFixed(3));
       });
       frame = requestAnimationFrame(tick);
     };
@@ -64,8 +74,8 @@ export default function MusicButton() {
     >
       <span
         ref={barsRef}
-        className={`flex h-7 w-11 items-center justify-center gap-[3px] rounded-[9px] bg-accent shadow-[0_0_0_1px_rgb(0_0_0/0.12)] ${
-          playing ? `eq-on items-end pb-[5px] ${hasAnalyser ? '' : 'eq-css'}` : ''
+        className={`flex h-8 w-11 items-end justify-center gap-[3px] rounded-[9px] bg-accent pb-[6px] shadow-[0_0_0_1px_rgb(0_0_0/0.12)] ${
+          playing ? `eq-on music-pill-on ${hasAnalyser ? '' : 'eq-css'}` : ''
         }`}
       >
         <span className="eq-bar" />

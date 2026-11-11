@@ -1,5 +1,6 @@
 import { useFrame } from '@react-three/fiber';
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
+import { MeshStandardMaterial } from 'three/webgpu';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { INTERACTABLES, PLAYER, getInteractable } from './config.js';
 import { activate, live, useRoom } from './store.js';
@@ -55,6 +56,9 @@ export default function Character() {
   const blocked = useRef(0);
 
   const torsoGeometry = useMemo(() => new RoundedBoxGeometry(0.5, 0.5, 0.29, 3, 0.09), []);
+  // Shared by every hair piece so the cap, back and tufts catch light the same way.
+  const hairMaterial = useMemo(() => new MeshStandardMaterial({ color: HAIR, roughness: 0.9 }), []);
+  useEffect(() => () => hairMaterial.dispose(), [hairMaterial]);
 
   useFrame(({ clock }, rawDelta) => {
     const delta = Math.min(rawDelta, 0.05);
@@ -269,18 +273,23 @@ export default function Character() {
           ))}
 
           {/* Hair: a cap, a longer back, and tufts for the wavy, slightly messy top */}
-          <mesh position={[0, 0.115, -0.05]} scale={[1.06, 0.76, 1.02]} castShadow>
-            <icosahedronGeometry args={[0.268, 2]} />
-            <meshStandardMaterial color={HAIR} roughness={0.95} flatShading />
+          <mesh position={[0, 0.12, -0.05]} scale={[1.1, 0.8, 1.06]} material={hairMaterial} castShadow>
+            <icosahedronGeometry args={[0.268, 3]} />
           </mesh>
-          <mesh position={[0, -0.04, -0.125]} scale={[1.16, 1.05, 0.9]}>
-            <icosahedronGeometry args={[0.2, 1]} />
-            <meshStandardMaterial color={HAIR} roughness={0.95} flatShading />
+          <mesh position={[0, -0.04, -0.125]} scale={[1.16, 1.05, 0.9]} material={hairMaterial}>
+            <icosahedronGeometry args={[0.2, 3]} />
           </mesh>
           {HAIR_TUFTS.map(([x, y, z, radius], index) => (
-            <mesh key={index} position={[x, y, z]} rotation={[index * 0.7, index * 1.3, index * 0.4]} castShadow={index < 7}>
-              <icosahedronGeometry args={[radius, 1]} />
-              <meshStandardMaterial color={HAIR} roughness={0.95} flatShading />
+            <mesh
+              key={index}
+              // Tufts sit slightly into the cap and are flattened, so they read as waves of one mass, not beads.
+              position={[x * 0.94, y * 0.97, z * 0.94]}
+              rotation={[index * 0.7, index * 1.3, index * 0.4]}
+              scale={[1.12, 0.72, 1.12]}
+              material={hairMaterial}
+              castShadow={index < 7}
+            >
+              <icosahedronGeometry args={[radius, 3]} />
             </mesh>
           ))}
         </group>

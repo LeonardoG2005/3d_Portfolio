@@ -17,6 +17,7 @@ export default {
     cv: 'Descargar CV',
     skip: 'Saltar al contenido',
     back_home: 'Leonardo Guevara, inicio',
+    back: 'Volver',
   },
 
   controls: {
@@ -91,7 +92,6 @@ export default {
       'Trabajo en todo el stack, pero lo que más disfruto es la ingeniería de backend y los sistemas centrados en datos: APIs, bases de datos, infraestructura en la nube y los flujos que los conectan. Me importan el código limpio, una arquitectura clara y las decisiones que se pueden explicar.',
       'Uno de mis proyectos, FluxLab, es un sistema de gestión de información de laboratorio que hoy usa el Laboratorio de Biotecnología de la Universidad de Medellín. Construir algo de lo que dependen personas reales me enseñó más que cualquier curso.',
       'Fuera de la universidad estudio aprendizaje automático e ingeniería de datos. Completé la Machine Learning Specialization de DeepLearning.AI y la ruta Data Engineer in Python de DataCamp, y tengo un certificado IELTS Academic de nivel C1.',
-      'También trabajo con un equipo en LinguWorld, un juego 2D multijugador de mundo abierto hecho con Unity y C# que ayuda a aprender idiomas.',
     ],
     focus_title: 'En qué me enfoco',
     focus: [
@@ -107,7 +107,6 @@ export default {
       { label: 'Forma de trabajo', value: 'Proyectos en equipo con Scrum, flujos de Git y revisión de código' },
     ],
     photo_alt: 'Retrato de Leonardo Guevara',
-    linguworld: 'LinguWorld en GitHub',
   },
 
   skills: {
@@ -355,7 +354,7 @@ export default {
     open: 'Abrir el asistente de preguntas',
     close: 'Cerrar el asistente',
     title: 'Pregunta sobre Leonardo',
-    disclaimer: 'Asistente con respuestas preparadas. No es una IA.',
+    disclaimer: 'Asistente con respuestas preparadas.',
     welcome:
       '¡Hola! Soy un pequeño asistente con respuestas preparadas. Puedo responder preguntas frecuentes sobre Leonardo. Elige una de estas o escribe la tuya.',
     placeholder: 'Escribe una pregunta',
@@ -406,6 +405,5 @@ export default {
 
   footer: {
     made: 'Diseñado y construido por Leonardo Guevara.',
-    source: 'Código en GitHub',
   },
 };

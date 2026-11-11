@@ -1,9 +1,8 @@
-import { Activity, Briefcase, CodeXml, Download, GraduationCap, House, Mail, User } from 'lucide-react';
+import { Briefcase, CodeXml, GraduationCap, House, Mail, User } from 'lucide-react';
 import { AnimatePresence, m } from 'motion/react';
 import { useEffect, useRef } from 'react';
-import { NavLink } from 'react-router';
+import { NavLink, useLocation } from 'react-router';
 import { ROUTES } from '../../app/routes.js';
-import { useCvFiles } from '../../hooks/useAvailableFiles.js';
 import { useT } from '../../i18n/index.jsx';
 import { LanguageToggle, ThemeToggle } from './Controls.jsx';
 
@@ -13,32 +12,49 @@ const ICONS = {
   skills: CodeXml,
   projects: Briefcase,
   journey: GraduationCap,
-  activity: Activity,
   contact: Mail,
 };
 
+// Timing and motion follow the reference navbar: blur fades in, items rise in with a staggered spring,
+// and on hover an item grows slightly and slides right while its underline extends.
+const scrim = {
+  closed: { opacity: 0, transition: { duration: 0.3 } },
+  open: { opacity: 1, transition: { duration: 0.4 } },
+};
 const list = {
-  open: { transition: { staggerChildren: 0.045, delayChildren: 0.08 } },
-  closed: {},
+  closed: { transition: { staggerChildren: 0.04, staggerDirection: -1 } },
+  open: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
 };
 const item = {
-  open: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' } },
-  closed: { opacity: 0, y: 14 },
+  closed: { opacity: 0, y: 20, scale: 1, x: 0 },
+  open: { opacity: 1, y: 0, scale: 1, x: 0, transition: { type: 'spring', stiffness: 100, duration: 0.5 } },
+  hover: { scale: 1.05, x: 10, transition: { type: 'spring', stiffness: 300, damping: 20 } },
+  tap: { scale: 0.95 },
 };
+const iconBox = {
+  closed: { scale: 1 },
+  open: { scale: 1 },
+  hover: { scale: 1.1 },
+};
+const underline = (active) => ({
+  closed: { width: active ? '30%' : '0%' },
+  open: { width: active ? '30%' : '0%', transition: { duration: 0.3 } },
+  hover: { width: '30%', transition: { duration: 0.3 } },
+});
 
-// Full-screen navigation. Behaves as a modal dialog: focus is trapped and Escape closes it.
+// Navigation overlay. The page stays visible (blurred and dimmed) and keeps scrolling underneath:
+// nothing here is scrollable and the document is not locked, so wheel and touch scroll reach the page.
 export default function OverlayMenu({ open, onClose }) {
   const t = useT();
   const panelRef = useRef(null);
-  const cv = useCvFiles();
+  const location = useLocation();
 
   useEffect(() => {
     if (!open) return undefined;
     const previous = document.activeElement;
     const panel = panelRef.current;
     const focusables = () => Array.from(panel.querySelectorAll('a[href], button:not([disabled])'));
-    focusables()[0]?.focus();
-    document.body.style.overflow = 'hidden';
+    focusables()[0]?.focus({ preventScroll: true });
 
     const onKey = (event) => {
       if (event.key === 'Escape') {
@@ -60,88 +76,80 @@ export default function OverlayMenu({ open, onClose }) {
     document.addEventListener('keydown', onKey);
     return () => {
       document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = '';
-      previous?.focus?.();
+      previous?.focus?.({ preventScroll: true });
     };
   }, [open, onClose]);
 
   return (
     <AnimatePresence>
       {open && (
-        <m.div
-          id="site-menu"
-          role="dialog"
-          aria-modal="true"
-          aria-label={t('nav.menu')}
-          ref={panelRef}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-40 overflow-y-auto bg-bg/92 backdrop-blur-xl"
-        >
-          <div className="mx-auto flex min-h-full max-w-6xl flex-col justify-between px-5 pb-8 pt-24 sm:px-6">
-            <m.nav variants={list} initial="closed" animate="open" aria-label={t('nav.menu')}>
-              <ul className="grid gap-1 sm:gap-2">
+        <>
+          <m.div
+            aria-hidden="true"
+            variants={scrim}
+            initial="closed"
+            animate="open"
+            exit="closed"
+            className="menu-scrim fixed inset-0 z-40 backdrop-blur-xl"
+          />
+          <m.div
+            id="site-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label={t('nav.menu')}
+            ref={panelRef}
+            initial="closed"
+            animate="open"
+            exit="closed"
+            className="fixed inset-0 z-40 flex items-center overflow-hidden"
+          >
+            <m.nav
+              variants={list}
+              aria-label={t('nav.menu')}
+              className="mx-auto w-full max-w-4xl px-6 pb-16 pt-24 sm:px-10"
+            >
+              <ul className="grid gap-2 sm:gap-4">
                 {ROUTES.map((route) => {
                   const RouteIcon = ICONS[route.id];
+                  const active = route.path === '/' ? location.pathname === '/' : location.pathname.startsWith(route.path);
                   return (
-                    <m.li key={route.id} variants={item}>
+                    <m.li key={route.id} variants={item} whileHover="hover" whileTap="tap" className="group relative">
                       <NavLink
                         to={route.path}
                         end={route.path === '/'}
                         onClick={onClose}
-                        className={({ isActive }) =>
-                          `group flex w-fit items-center gap-4 rounded-2xl py-2 pr-4 font-display text-[2.5rem] font-semibold leading-tight tracking-tight transition-[color,transform] duration-300 hover:translate-x-2 sm:gap-5 sm:text-6xl ${
-                            isActive ? 'text-ink' : 'text-muted/60 hover:text-ink focus-visible:text-ink'
-                          }`
-                        }
+                        aria-current={active ? 'page' : undefined}
+                        className={`menu-link flex w-fit items-center gap-5 py-2 pl-1 pr-6 font-display text-4xl font-medium tracking-tight transition-colors duration-300 sm:gap-7 sm:py-3 sm:text-5xl ${
+                          active ? 'text-ink' : 'text-ink/35 group-hover:text-ink focus-visible:text-ink'
+                        }`}
                       >
-                        {({ isActive }) => (
-                          <>
-                            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-raised/70 transition-colors duration-300 group-hover:bg-raised sm:h-16 sm:w-16">
-                              <RouteIcon aria-hidden="true" className="h-6 w-6 sm:h-8 sm:w-8" />
-                            </span>
-                            <span className="relative pb-1.5">
-                              {t(`nav.${route.id}`)}
-                              {/* Underline in the text colour: always on for the current page, grows on hover */}
-                              <span
-                                aria-hidden="true"
-                                className={`absolute bottom-0 left-0 h-[3px] rounded-full bg-current transition-[width] duration-300 group-hover:w-full group-focus-visible:w-full ${
-                                  isActive ? 'w-1/3' : 'w-0'
-                                }`}
-                              />
-                            </span>
-                          </>
-                        )}
+                        <m.span
+                          variants={iconBox}
+                          className="menu-icon grid shrink-0 place-items-center rounded-lg p-2 transition-colors duration-300"
+                        >
+                          <RouteIcon aria-hidden="true" strokeWidth={1.4} className="h-8 w-8 sm:h-10 sm:w-10" />
+                        </m.span>
+                        <span>{t(`nav.${route.id}`)}</span>
                       </NavLink>
+                      {/* Underline in the text colour, as in the reference: on for the current page, grows on hover */}
+                      <m.span
+                        aria-hidden="true"
+                        variants={underline(active)}
+                        style={{ width: active ? '30%' : '0%' }}
+                        className="pointer-events-none absolute bottom-1 left-[4.5rem] block h-0.5 rounded-full bg-ink sm:left-[5.5rem]"
+                      />
                     </m.li>
                   );
                 })}
               </ul>
             </m.nav>
 
-            <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
-              <div className="flex flex-wrap gap-2">
-                {cv.items.map((file) => (
-                  <a
-                    key={file.lang}
-                    href={file.href}
-                    download
-                    className="inline-flex h-11 items-center gap-2 rounded-full border border-line bg-surface px-4 text-sm font-medium transition-colors hover:border-accent-ink"
-                  >
-                    <Download size={16} aria-hidden="true" />
-                    {t(`contact.cv_${file.lang}`)}
-                  </a>
-                ))}
-              </div>
-              <div className="flex items-center gap-1 sm:hidden">
-                <LanguageToggle />
-                <ThemeToggle />
-              </div>
-            </div>
-          </div>
-        </m.div>
+            <m.div variants={scrim} className="absolute inset-x-0 bottom-6 flex justify-center gap-1 sm:hidden">
+              <LanguageToggle />
+              <ThemeToggle />
+            </m.div>
+          </m.div>
+        </>
       )}
     </AnimatePresence>
   );

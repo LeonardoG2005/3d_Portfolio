@@ -1,10 +1,13 @@
 import { ArrowRight } from 'lucide-react';
+import { Suspense, lazy } from 'react';
 import { Link } from 'react-router';
 import PageShell from '../components/layout/PageShell.jsx';
 import SmartImage from '../components/ui/SmartImage.jsx';
 import { Card, Chip } from '../components/ui/primitives.jsx';
 import { PROJECTS } from '../data/projects.js';
 import { useT } from '../i18n/index.jsx';
+
+const ActivitySection = lazy(() => import('../features/github-activity/ActivitySection.jsx'));
 
 export default function Projects() {
   const t = useT();
@@ -56,6 +59,10 @@ export default function Projects() {
           );
         })}
       </ul>
+
+      <Suspense fallback={<div id="activity" className="mt-20 min-h-[420px]" />}>
+        <ActivitySection />
+      </Suspense>
     </PageShell>
   );
 }

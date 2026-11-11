@@ -30,7 +30,7 @@ export function MusicProvider({ children }) {
       const source = context.createMediaElementSource(audio);
       const analyser = context.createAnalyser();
       analyser.fftSize = 64;
-      analyser.smoothingTimeConstant = 0.75;
+      analyser.smoothingTimeConstant = 0.55;
       source.connect(analyser);
       analyser.connect(context.destination);
       contextRef.current = context;

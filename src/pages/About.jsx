@@ -1,8 +1,8 @@
-import { ArrowUpRight, Download } from 'lucide-react';
+import { Download } from 'lucide-react';
 import { useState } from 'react';
 import PageShell from '../components/layout/PageShell.jsx';
 import { ButtonLink, Card } from '../components/ui/primitives.jsx';
-import { ASSETS, PROFILE } from '../data/profile.js';
+import { ASSETS } from '../data/profile.js';
 import { useCvFiles } from '../hooks/useAvailableFiles.js';
 import { useT } from '../i18n/index.jsx';
 import { asset } from '../lib/paths.js';
@@ -46,10 +46,6 @@ export default function About() {
                 {t(`contact.cv_${file.lang}`)}
               </ButtonLink>
             ))}
-            <ButtonLink href={PROFILE.links.linguworld} external variant="secondary">
-              {t('about.linguworld')}
-              <ArrowUpRight size={16} aria-hidden="true" />
-            </ButtonLink>
           </div>
         </div>
 

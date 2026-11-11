@@ -153,6 +153,28 @@ a {
   opacity: 1;
 }
 
+/* Navigation overlay: dims the page in both themes without changing its palette. */
+.menu-scrim {
+  background: rgb(8 11 9 / 0.58);
+}
+[data-theme='light'] .menu-scrim {
+  background: rgb(20 26 21 / 0.22);
+}
+.menu-icon {
+  background: rgb(0 0 0 / 0.2);
+}
+.group:hover .menu-icon,
+.menu-link:focus-visible .menu-icon {
+  background: rgb(255 255 255 / 0.1);
+}
+[data-theme='light'] .menu-icon {
+  background: rgb(20 26 21 / 0.05);
+}
+[data-theme='light'] .group:hover .menu-icon,
+[data-theme='light'] .menu-link:focus-visible .menu-icon {
+  background: rgb(20 26 21 / 0.1);
+}
+
 .sr-only-focusable:not(:focus):not(:focus-within) {
   position: absolute;
   width: 1px;
@@ -167,8 +189,11 @@ a {
   width: 4px;
   border-radius: 2px;
   background: var(--on-accent);
-  height: calc(4px + var(--level, 0) * 14px);
-  transition: height 0.12s ease-out;
+  height: 4px;
+  transition: height 0.08s linear;
+}
+.eq-on .eq-bar {
+  height: calc(4px + var(--level, 0) * 20px);
 }
 .eq-css .eq-bar {
   animation: eq 0.9s ease-in-out infinite alternate;
@@ -178,8 +203,16 @@ a {
 .eq-css .eq-bar:nth-child(3) { animation-duration: 0.71s; animation-delay: -0.5s; }
 .eq-css .eq-bar:nth-child(4) { animation-duration: 1.08s; animation-delay: -0.15s; }
 @keyframes eq {
-  from { height: 5px; }
-  to { height: 18px; }
+  from { height: 4px; }
+  to { height: 23px; }
+}
+/* While music plays the pill drifts between the brand green and a muted violet. */
+.music-pill-on {
+  animation: music-tint 6s ease-in-out infinite alternate;
+}
+@keyframes music-tint {
+  from { background-color: #009929; }
+  to { background-color: #6b4fd8; }
 }
 
 }
@@ -193,8 +226,9 @@ a {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .eq-on .eq-bar:nth-child(1) { height: 8px; }
-  .eq-on .eq-bar:nth-child(2) { height: 14px; }
-  .eq-on .eq-bar:nth-child(3) { height: 10px; }
-  .eq-on .eq-bar:nth-child(4) { height: 17px; }
+  .eq-on .eq-bar:nth-child(1) { height: 9px; }
+  .eq-on .eq-bar:nth-child(2) { height: 17px; }
+  .eq-on .eq-bar:nth-child(3) { height: 12px; }
+  .eq-on .eq-bar:nth-child(4) { height: 21px; }
+  .music-pill-on { animation: none; }
 }

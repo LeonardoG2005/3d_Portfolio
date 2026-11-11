@@ -18,7 +18,7 @@ export const COLLIDERS = [
   { id: 'backpack', minX: -3.9, maxX: -3.5, minZ: 2.02, maxZ: 2.4 },
   { id: 'tallPlant', minX: 3.1, maxX: 3.8, minZ: -3.8, maxZ: -3.1 },
   { id: 'sideTable', minX: 2.9, maxX: 3.6, minZ: -1.85, maxZ: -1.15 },
-  { id: 'guitar', minX: 3.1, maxX: 3.7, minZ: 0.05, maxZ: 0.55 },
+  { id: 'guitars', minX: 3.05, maxX: 3.8, minZ: 0.62, maxZ: 3.08 },
 ];
 
 // Objects the visitor can open.
@@ -70,7 +70,7 @@ export const INTERACTABLES = [
   },
   {
     id: 'activity',
-    route: '/activity',
+    route: '/projects#activity',
     approach: { x: 1.0, z: -3.2 },
     focus: [1.0, 1.75, -3.95],
     label: [1.0, 2.3, -3.9],

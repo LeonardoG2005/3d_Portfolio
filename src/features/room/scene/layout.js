@@ -294,20 +294,84 @@ function rightSide(b, p) {
   b.cyl(3.25, 0.5, -1.5, 0.34, 0.045, p.wood, { segments: 18 });
   b.cyl(3.25, 0.25, -1.5, 0.04, 0.48, p.metal);
   b.cyl(3.25, 0.015, -1.5, 0.2, 0.03, p.metal, { segments: 16 });
-  b.box(3.2, 0.535, -1.46, 0.1, 0.014, 0.2, p.metal, [0, 0.35, 0]);
-  b.box(3.36, 0.54, -1.66, 0.2, 0.03, 0.15, p.books[0], [0, -0.3, 0]);
-  b.cyl(3.4, 0.58, -1.36, 0.05, 0.1, p.pot, { top: 0.06 });
-  b.sphere(3.4, 0.69, -1.36, 0.08, p.leafB, { squash: [1, 1.2, 1] });
+  // Only the phone sits on the table, centred so nothing hides it from the camera.
+  b.box(3.25, 0.534, -1.5, 0.13, 0.016, 0.25, p.metal, [0, 0.35, 0]);
 
-  // Guitar on a stand
-  b.group(3.4, 0, 0.3, -Math.PI / 2, (g) => {
-    g.box(0, 0.02, 0, 0.36, 0.03, 0.3, p.metal);
-    g.box(0, 0.36, -0.1, 0.03, 0.7, 0.03, p.metal, [0.2, 0, 0]);
-    g.cyl(0, 0.36, 0.02, 0.2, 0.09, p.wood, { segments: 16, rotation: [Math.PI / 2 - 0.2, 0, 0] });
-    g.cyl(0, 0.62, -0.03, 0.15, 0.09, p.wood, { segments: 16, rotation: [Math.PI / 2 - 0.2, 0, 0] });
-    g.cyl(0, 0.5, 0.045, 0.06, 0.012, p.metal, { segments: 12, rotation: [Math.PI / 2 - 0.2, 0, 0] });
-    g.box(0, 1.02, -0.1, 0.055, 0.7, 0.03, p.woodDark, [-0.2, 0, 0]);
-    g.box(0, 1.41, -0.18, 0.08, 0.15, 0.03, p.metal, [-0.2, 0, 0]);
+  // Three instruments on stands in the front-right corner, turned toward the camera.
+  instrument(b, p, 3.42, 0.95, Math.PI / 4 + 0.22, 'acoustic');
+  instrument(b, p, 3.5, 1.85, Math.PI / 4, 'electric');
+  instrument(b, p, 3.38, 2.75, Math.PI / 4 - 0.22, 'bass');
+}
+
+// A guitar leaning back on a stand. Local +z is the front of the instrument.
+function instrument(b, p, x, z, turn, kind) {
+  const lean = 0.18;
+  const slope = Math.tan(lean);
+  // z of the instrument's centre plane at height y, plus an optional offset toward its front.
+  const zAt = (y, front = 0) => -(y - 0.12) * slope + front;
+  const spec = {
+    acoustic: { body: '#d9a86a', neck: p.woodDark, board: '#2a1a10', thick: 0.11, neckFrom: 0.7, neckTo: 1.24, tuners: 3 },
+    electric: { body: p.fabric, neck: '#e2c48e', board: '#3a2618', thick: 0.05, neckFrom: 0.6, neckTo: 1.26, tuners: 6 },
+    bass: { body: '#6b3f22', neck: '#c9a070', board: '#2a1a10', thick: 0.056, neckFrom: 0.62, neckTo: 1.46, tuners: 2 },
+  }[kind];
+  const t = spec.thick;
+  const front = t / 2;
+
+  b.group(x, 0, z, turn, (g) => {
+    const disc = (y, r, depth, color, dx = 0, offset = 0) =>
+      g.cyl(dx, y, zAt(y, offset), r, depth, color, { segments: 20, rotation: [Math.PI / 2 - lean, 0, 0] });
+    const plate = (y, w, h, color, dx = 0, offset = front + 0.006, depth = 0.012) =>
+      g.box(dx, y, zAt(y, offset), w, h, depth, color, [-lean, 0, 0]);
+
+    // Stand: base, front cradle and back support
+    g.box(0, 0.02, 0.02, 0.36, 0.03, 0.28, p.metal);
+    g.box(0, 0.12, 0.08, 0.32, 0.03, 0.06, p.metal);
+    g.box(0, 0.5, zAt(0.5, -front - 0.04), 0.025, 0.9, 0.025, p.metal, [-lean, 0, 0]);
+
+    if (kind === 'acoustic') {
+      disc(0.33, 0.205, t, spec.body);
+      disc(0.47, 0.135, t, spec.body);
+      disc(0.59, 0.158, t, spec.body);
+      disc(0.52, 0.05, 0.014, '#20140c', 0, front + 0.002); // sound hole
+      g.torus(0, 0.52, zAt(0.52, front + 0.008), 0.064, 0.007, spec.board, { rotation: [-lean, 0, 0] });
+      plate(0.32, 0.13, 0.025, spec.board); // bridge
+    } else {
+      const big = kind === 'bass' ? 1.08 : 1;
+      disc(0.33, 0.17 * big, t, spec.body);
+      disc(0.5, 0.115 * big, t, spec.body, -0.05);
+      disc(0.56, 0.055 * big, t, spec.body, 0.085 * big); // horn, leaves a cutaway between the bouts
+      if (kind === 'electric') {
+        disc(0.4, 0.115, 0.008, p.cream, 0.025, front + 0.002); // pickguard
+        plate(0.36, 0.11, 0.028, '#16191a', 0, front + 0.012);
+        plate(0.45, 0.11, 0.028, '#16191a', 0, front + 0.012);
+        plate(0.28, 0.1, 0.02, p.metal);
+        g.cyl(0.11, 0.27, zAt(0.27, front + 0.01), 0.018, 0.02, p.cream, { rotation: [Math.PI / 2 - lean, 0, 0] });
+      } else {
+        disc(0.42, 0.11, 0.008, '#16191a', 0.02, front + 0.002); // dark pickguard
+        plate(0.4, 0.13, 0.035, p.cream, 0, front + 0.012);
+        plate(0.28, 0.12, 0.022, p.metal);
+      }
+    }
+
+    // Neck, fretboard, headstock and tuners
+    const neckMid = (spec.neckFrom + spec.neckTo) / 2;
+    const neckLen = spec.neckTo - spec.neckFrom;
+    g.box(0, neckMid, zAt(neckMid), kind === 'bass' ? 0.06 : 0.055, neckLen, 0.035, spec.neck, [-lean, 0, 0]);
+    plate(neckMid, kind === 'bass' ? 0.052 : 0.046, neckLen, spec.board, 0, 0.02, 0.008);
+    const headY = spec.neckTo + 0.08;
+    g.box(0, headY, zAt(headY), kind === 'electric' ? 0.075 : 0.09, 0.16, 0.03, kind === 'acoustic' ? spec.neck : spec.board, [-lean, 0, 0]);
+    for (let i = 0; i < spec.tuners; i += 1) {
+      if (kind === 'electric') {
+        const ty = spec.neckTo + 0.02 + i * 0.022;
+        g.box(0.05, ty, zAt(ty), 0.03, 0.012, 0.012, p.metal);
+      } else {
+        const ty = spec.neckTo + 0.04 + i * (kind === 'bass' ? 0.07 : 0.045);
+        const size = kind === 'bass' ? 0.04 : 0.03;
+        const metal = kind === 'bass' ? p.metal : p.brass;
+        g.box(-0.062, ty, zAt(ty), size, 0.016, 0.016, metal);
+        g.box(0.062, ty, zAt(ty), size, 0.016, 0.016, metal);
+      }
+    }
   });
 }
 
@@ -319,9 +383,10 @@ export function buildRoomGeometry(p) {
   for (let i = 0; i < 16; i += 1) {
     b.box(-3.75 + i * 0.5, -0.02, 0, 0.49, 0.04, 8, i % 2 ? p.floorA : p.floorB);
   }
-  // Walls and baseboards
-  b.box(-4.075, 1.6, -0.075, 0.15, 3.7, 8.15, p.wallLeft);
-  b.box(0, 1.6, -4.075, 8, 3.7, 0.15, p.wallRight);
+  // Walls and baseboards. The walls rest on top of the slab (bottom at y = -0.04): if they reached
+  // down into it, their end faces would share a plane with the slab sides and flicker (z-fighting).
+  b.box(-4.075, 1.705, -0.075, 0.15, 3.49, 8.15, p.wallLeft);
+  b.box(0, 1.705, -4.075, 8, 3.49, 0.15, p.wallRight);
   b.box(-3.985, 0.07, 0, 0.03, 0.14, 8, p.trim);
   b.box(0, 0.07, -3.985, 8, 0.14, 0.03, p.trim);
 

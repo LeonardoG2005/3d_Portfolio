@@ -17,6 +17,7 @@ export default {
     cv: 'Download CV',
     skip: 'Skip to content',
     back_home: 'Leonardo Guevara, home',
+    back: 'Go back',
   },
 
   controls: {
@@ -91,7 +92,6 @@ export default {
       'I work across the stack, but what I enjoy most is backend engineering and data-centric systems: APIs, databases, cloud infrastructure and the pipelines that connect them. I care about clean code, clear architecture and decisions that can be explained.',
       'One of my projects, FluxLab, is a laboratory information management system that the Biotechnology Laboratory at Universidad de Medellín uses today. Building something that real people depend on taught me more than any course.',
       'Outside university I study machine learning and data engineering. I completed the Machine Learning Specialization by DeepLearning.AI and the Data Engineer in Python track at DataCamp, and I hold an IELTS Academic certificate at C1 level.',
-      'I am also working with a team on LinguWorld, a 2D open-world multiplayer game made with Unity and C# that helps players learn languages.',
     ],
     focus_title: 'What I focus on',
     focus: [
@@ -107,7 +107,6 @@ export default {
       { label: 'Working style', value: 'Team projects with Scrum, Git workflows and code review' },
     ],
     photo_alt: 'Portrait of Leonardo Guevara',
-    linguworld: 'LinguWorld on GitHub',
   },
 
   skills: {
@@ -355,7 +354,7 @@ export default {
     open: 'Open the questions assistant',
     close: 'Close the assistant',
     title: 'Ask about Leonardo',
-    disclaimer: 'Scripted assistant with prepared answers. It is not an AI.',
+    disclaimer: 'Scripted assistant with prepared answers.',
     welcome:
       'Hi! I am a small scripted assistant. I can answer common questions about Leonardo with prepared answers. Pick one of these or type your own.',
     placeholder: 'Type a question',
@@ -406,6 +405,5 @@ export default {
 
   footer: {
     made: 'Designed and built by Leonardo Guevara.',
-    source: 'Source on GitHub',
   },
 };

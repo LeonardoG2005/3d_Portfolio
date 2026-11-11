@@ -128,8 +128,8 @@ function Screens({ theme }) {
         <meshBasicMaterial map={sky} toneMapped={false} />
       </mesh>
       {/* Phone screen and PC power LED */}
-      <mesh position={[3.2, 0.5435, -1.46]} rotation={[-Math.PI / 2, 0, 0.35]}>
-        <planeGeometry args={[0.085, 0.18]} />
+      <mesh position={[3.25, 0.5425, -1.5]} rotation={[-Math.PI / 2, 0, 0.35]}>
+        <planeGeometry args={[0.11, 0.22]} />
         <meshBasicMaterial color="#2fce5b" toneMapped={false} />
       </mesh>
       <mesh position={[-2.3, 0.44, -3.327]}>

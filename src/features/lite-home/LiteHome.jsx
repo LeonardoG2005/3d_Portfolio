@@ -14,7 +14,7 @@ const TILES = [
   { id: 'skills', to: '/skills', icon: Library },
   { id: 'about', to: '/about', icon: User },
   { id: 'journey', to: '/journey', icon: DoorOpen },
-  { id: 'activity', to: '/activity', icon: Activity },
+  { id: 'activity', to: '/projects#activity', icon: Activity },
   { id: 'contact', to: '/contact', icon: Smartphone },
   { id: 'cv', to: '/contact', icon: FileText },
 ];

@@ -8,7 +8,6 @@ export const PROFILE = {
   links: {
     github: 'https://github.com/LeonardoG2005',
     linkedin: 'https://www.linkedin.com/in/leotuvstarr/',
-    linguworld: 'https://github.com/LeonardoG2005/LinguWorld',
     bankMarketing: 'https://github.com/LeonardoG2005/Bank-Marketing-Database',
     ielts: 'https://www.linkedin.com/in/leotuvstarr/details/certifications/',
   },

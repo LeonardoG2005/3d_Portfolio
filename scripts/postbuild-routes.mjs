@@ -4,7 +4,7 @@
 import { copyFile, mkdir, access } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ROUTES } from '../src/app/routes.js';
+import { LEGACY_PATHS, ROUTES } from '../src/app/routes.js';
 import { PROJECTS } from '../src/data/projects.js';
 
 const dist = fileURLToPath(new URL('../dist/', import.meta.url));
@@ -13,6 +13,7 @@ const index = join(dist, 'index.html');
 export const staticPaths = [
   ...ROUTES.map((route) => route.path).filter((path) => path !== '/'),
   ...PROJECTS.map((project) => `/projects/${project.slug}`),
+  ...LEGACY_PATHS,
 ];
 
 await access(index);

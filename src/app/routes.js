@@ -6,8 +6,10 @@ export const ROUTES = [
   { id: 'skills', path: '/skills' },
   { id: 'projects', path: '/projects' },
   { id: 'journey', path: '/journey' },
-  { id: 'activity', path: '/activity' },
   { id: 'contact', path: '/contact' },
 ];
+
+// Old addresses that still get a real HTML file so existing links keep working.
+export const LEGACY_PATHS = ['/activity'];
 
 export const routePath = (id) => ROUTES.find((route) => route.id === id)?.path ?? '/';

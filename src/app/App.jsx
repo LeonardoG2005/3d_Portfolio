@@ -21,10 +21,24 @@ const ChatWidget = lazy(() => import('../features/assistant/ChatWidget.jsx'));
 function Pages() {
   const location = useLocation();
 
-  // New page: start at the top and move keyboard focus to the content.
+  // New page: start at the top, or at the #section the link points to once it has rendered.
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
+    const id = location.hash.slice(1);
+    if (!id) {
+      window.scrollTo(0, 0);
+      return undefined;
+    }
+    let tries = 0;
+    const timer = window.setInterval(() => {
+      const target = document.getElementById(id);
+      tries += 1;
+      if (target || tries > 40) {
+        window.clearInterval(timer);
+        target?.scrollIntoView({ block: 'start' });
+      }
+    }, 75);
+    return () => window.clearInterval(timer);
+  }, [location.pathname, location.hash]);
 
   return (
     <AnimatePresence mode="wait" initial={false}>

@@ -4,7 +4,7 @@ import { Vector3 } from 'three/webgpu';
 import { INTERACTABLES, ROOM, getInteractable } from './config.js';
 import { live, requestInteract, useRoom, walkTo } from './store.js';
 
-const OFFSET = new Vector3(12, 10.2, 12); // isometric viewing direction
+const OFFSET = new Vector3(12, 9.2, 12); // isometric viewing direction, about 31 degrees above the floor
 
 // Orthographic camera that keeps the room in frame, follows the character and eases toward an object being opened.
 export function CameraRig() {
