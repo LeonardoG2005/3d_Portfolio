@@ -54,6 +54,7 @@
 
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-display: 'Space Grotesk Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
   --radius-sm: 10px;
@@ -69,17 +70,18 @@
 html {
   background: var(--bg);
   -webkit-text-size-adjust: 100%;
+  transition: background-color 0.25s ease;
 }
 
 body {
   margin: 0;
   min-height: 100dvh;
-  background: var(--bg);
+  /* No background here: the content pages draw a fixed canvas between <html> and the content. */
   color: var(--text);
   font-family: var(--font-sans);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition: color 0.25s ease;
 }
 
 h1,
@@ -175,6 +177,123 @@ a {
   background: rgb(20 26 21 / 0.1);
 }
 
+/* ---------- Editorial layer for the content pages ---------- */
+.shell {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1500px;
+  padding-inline: 1.25rem;
+}
+@media (min-width: 640px) {
+  .shell { padding-inline: 2rem; }
+}
+@media (min-width: 1024px) {
+  .shell { padding-inline: 3.5rem; }
+}
+.display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+}
+.serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--muted);
+}
+/* Letters rise from behind this mask; the padding keeps descenders from being cut. */
+.split-word {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0.1em 0.08em 0.22em;
+  margin: -0.1em -0.08em -0.22em;
+}
+.split-char {
+  display: inline-block;
+  will-change: transform;
+}
+.next-band-fill {
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.55s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.next-band:hover .next-band-fill,
+.next-band:focus-visible .next-band-fill {
+  transform: scaleY(1);
+}
+/* Rows that fill with the accent colour from the bottom on hover or focus. */
+.fill-row {
+  position: relative;
+  isolation: isolate;
+  transition: color 0.3s ease;
+}
+.fill-row::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.fill-row:hover::before,
+.fill-row:focus-visible::before {
+  transform: scaleY(1);
+}
+.fill-row:hover,
+.fill-row:focus-visible,
+.fill-row:hover .fill-row-muted,
+.fill-row:focus-visible .fill-row-muted {
+  color: var(--on-accent);
+}
+
+/* Typed line: a code comment written out letter by letter, with a block cursor. */
+.typed {
+  font-family: var(--font-mono);
+  font-size: clamp(0.95rem, 1.45vw, 1.3rem);
+  line-height: 1.7;
+  letter-spacing: -0.01em;
+  color: color-mix(in srgb, var(--text) 78%, transparent);
+}
+.typed-prefix {
+  position: relative;
+  color: var(--accent-ink);
+}
+.typed-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+.typed-char {
+  position: relative;
+}
+.typed.is-typing .typed-char:not(.is-on) {
+  opacity: 0;
+}
+.typed-cursor::after {
+  content: '';
+  position: absolute;
+  left: calc(100% + 0.14em);
+  top: 0.16em;
+  width: 0.55em;
+  height: 1.12em;
+  background: var(--accent-ink);
+  animation: typed-blink 1.05s steps(1) infinite;
+}
+.typed.is-writing .typed-cursor::after {
+  animation: none;
+}
+@keyframes typed-blink {
+  50% { opacity: 0; }
+}
+
 .sr-only-focusable:not(:focus):not(:focus-within) {
   position: absolute;
   width: 1px;
@@ -231,4 +350,97 @@ a {
   .eq-on .eq-bar:nth-child(3) { height: 12px; }
   .eq-on .eq-bar:nth-child(4) { height: 21px; }
   .music-pill-on { animation: none; }
+}
+
+/* Project index: the rows you are not pointing at step back. */
+@media (hover: hover) {
+  .project-row {
+    transition: opacity 0.4s ease;
+  }
+  .project-index:hover .project-row:not(:hover) {
+    opacity: 0.32;
+  }
+}
+
+/* Journey stations: the node and the large mark switch on when the line reaches them. */
+.station-node {
+  background: var(--bg);
+  border-color: var(--border);
+  color: var(--muted);
+  transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease, box-shadow 0.5s ease;
+}
+.station.is-on .station-node {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+  box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.station-ghost {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--border);
+  transition: -webkit-text-stroke-color 0.6s ease;
+}
+.station.is-on .station-ghost {
+  -webkit-text-stroke-color: var(--muted);
+}
+
+/* Skills bands */
+.band-word {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--muted);
+  transition: color 0.4s ease, -webkit-text-stroke-color 0.4s ease;
+}
+.skill-band:hover .band-word,
+.skill-band.is-open .band-word,
+.skill-band button:focus-visible .band-word {
+  color: var(--text);
+  -webkit-text-stroke-color: var(--text);
+}
+.band-loop {
+  animation: band-loop 48s linear infinite;
+}
+.skill-band:nth-child(even) .band-loop {
+  animation-direction: reverse;
+}
+.skill-band:hover .band-loop,
+.skill-band.is-open .band-loop {
+  animation-play-state: paused;
+}
+@keyframes band-loop {
+  to { transform: translateX(-50%); }
+}
+.skill-icon {
+  color: var(--muted);
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+.skill-band:hover .skill-icon,
+.skill-band.is-open .skill-icon {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+.skill-toggle {
+  transition: transform 0.4s ease;
+}
+.skill-band.is-open .skill-toggle {
+  transform: rotate(45deg);
+}
+.skill-panel {
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.55s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.skill-band.is-open .skill-panel {
+  grid-template-rows: 1fr;
+}
+
+/* Footer heart: two quick beats, then a rest. */
+.heart-beat {
+  animation: heart-beat 1.6s ease-in-out infinite;
+  transform-origin: center;
+}
+@keyframes heart-beat {
+  0%, 36%, 100% { transform: scale(1); }
+  12% { transform: scale(1.28); }
+  24% { transform: scale(1.05); }
+  30% { transform: scale(1.22); }
 }

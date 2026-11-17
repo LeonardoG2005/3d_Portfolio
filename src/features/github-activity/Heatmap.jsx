@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLanguage } from '../../i18n/index.jsx';
+import { MOTION_OK, gsap, useGSAP } from '../../lib/gsap.js';
 import { monthMarkers, toWeeks } from './stats.js';
 
-const CELL = 13; // px, cell size
-const GAP = 3;
+const MIN_CELL = 13; // px
+const MAX_CELL = 22;
+const LABELS = 40; // room for the weekday names
 
 export function formatDate(date, lang) {
   return new Date(`${date}T00:00:00Z`).toLocaleDateString(lang === 'es' ? 'es-CO' : 'en-US', {
@@ -25,17 +27,53 @@ export function describeDay(day, t, lang) {
 export default function Heatmap({ days }) {
   const { t, lang } = useLanguage();
   const scrollRef = useRef(null);
+  const gridRef = useRef(null);
   const [tip, setTip] = useState(null);
+  const [cell, setCell] = useState(MIN_CELL);
   const weeks = useMemo(() => toWeeks(days), [days]);
   const markers = useMemo(() => monthMarkers(weeks), [weeks]);
   const months = t('activity.months');
   const weekdays = t('activity.weekdays');
 
+  // Cells take the width that is available, between a minimum (the calendar then scrolls sideways) and a maximum.
+  useEffect(() => {
+    const element = scrollRef.current;
+    if (!element || weeks.length === 0) return undefined;
+    const measure = () => {
+      const size = Math.floor((element.clientWidth - LABELS) / weeks.length / 1.22);
+      setCell(Math.max(MIN_CELL, Math.min(MAX_CELL, size)));
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [weeks.length]);
+  const CELL = cell;
+  const GAP = Math.round(cell * 0.22);
+
   // On narrow screens start scrolled to the most recent weeks.
   useEffect(() => {
     const element = scrollRef.current;
     if (element) element.scrollLeft = element.scrollWidth;
-  }, [weeks]);
+  }, [weeks, cell]);
+
+  // The calendar fills in as a diagonal wave the first time it is seen, and again when the year changes.
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(MOTION_OK, () => {
+        gsap.from(gridRef.current.children, {
+          scale: 0,
+          opacity: 0,
+          duration: 0.45,
+          ease: 'back.out(2.2)',
+          stagger: (index) => (Math.floor(index / 7) + (index % 7)) * 0.017,
+          scrollTrigger: { trigger: gridRef.current, start: 'top 88%', once: true },
+        });
+      });
+    },
+    { dependencies: [weeks], revertOnUpdate: true },
+  );
 
   const showTip = (event, day) => {
     const cell = event.currentTarget.getBoundingClientRect();
@@ -72,6 +110,7 @@ export default function Heatmap({ days }) {
               ))}
             </div>
             <div
+              ref={gridRef}
               role="img"
               aria-label={t('activity.title')}
               className="grid grid-flow-col"
@@ -84,7 +123,7 @@ export default function Heatmap({ days }) {
                       key={day.date}
                       onPointerEnter={(event) => showTip(event, day)}
                       onPointerDown={(event) => showTip(event, day)}
-                      className="rounded-[3px] outline-1 -outline-offset-1 outline-black/5 dark:outline-white/5"
+                      className="rounded-[22%] outline-1 -outline-offset-1 outline-black/5 dark:outline-white/5"
                       style={{ background: `var(--heat-${day.level})` }}
                     />
                   ) : (

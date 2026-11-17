@@ -12,6 +12,7 @@ import { PALETTES } from './scene/palette.js';
 import { CameraRig, ClickFloor, Interactables, LabelProjector } from './SceneSystems.jsx';
 import { live, resetLive, useRoom } from './store.js';
 import RoomHud from './ui/RoomHud.jsx';
+import Starfield from './ui/Starfield.jsx';
 
 const IDLE_AFTER_MS = 20000;
 
@@ -175,6 +176,7 @@ export default function RoomExperience({ theme, rendererPref, onNavigate, onFail
       onPointerDown={() => live.wake()}
       onPointerMove={() => live.wake()}
     >
+      <Starfield theme={theme} />
       <div className={`absolute inset-0 transition-opacity duration-700 ${ready ? 'opacity-100' : 'opacity-0'}`}>
         <SceneBoundary onError={fail}>
           <Canvas

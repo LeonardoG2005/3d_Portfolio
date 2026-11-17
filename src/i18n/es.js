@@ -18,6 +18,7 @@ export default {
     skip: 'Saltar al contenido',
     back_home: 'Leonardo Guevara, inicio',
     back: 'Volver',
+    next: 'Siguiente',
   },
 
   controls: {
@@ -112,8 +113,8 @@ export default {
   skills: {
     title: 'Habilidades',
     subtitle: 'Tecnologías que he usado en proyectos universitarios, personales y aplicados.',
-    note: 'Aquí no hay barras de porcentaje. Los proyectos muestran cómo uso estas herramientas.',
-    see_projects: 'Míralas en mis proyectos',
+    expand_all: 'Abrir todas',
+    collapse_all: 'Cerrar todas',
     groups: {
       languages: 'Lenguajes de programación',
       backend: 'Backend',
@@ -335,7 +336,7 @@ export default {
     title: 'Contacto',
     subtitle: 'La forma más rápida de encontrarme es por correo o LinkedIn.',
     email: 'Correo',
-    email_action: 'Escríbeme',
+    email_action: 'Envíame un correo',
     copy: 'Copiar dirección',
     copied: 'Copiado',
     linkedin: 'LinkedIn',
@@ -343,6 +344,7 @@ export default {
     github: 'GitHub',
     github_action: 'Mira mi código',
     location: 'Ubicación',
+    local_time: 'Hora local',
     cv_title: 'Hoja de vida',
     cv_text: 'PDF, actualizado para este portafolio.',
     cv_en: 'CV en inglés',
@@ -404,6 +406,8 @@ export default {
   },
 
   footer: {
-    made: 'Diseñado y construido por Leonardo Guevara.',
+    made_with: 'Hecho con',
+    love: 'amor',
+    made_by: 'por Leo',
   },
 };

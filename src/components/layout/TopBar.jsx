@@ -47,7 +47,7 @@ export default function TopBar() {
           scrolled && !open ? 'border-b border-line bg-bg/80 backdrop-blur-md' : 'border-b border-transparent'
         }`}
       >
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+        <div className="shell flex h-16 items-center justify-between">
           <Link to="/" aria-label={t('nav.back_home')} className="flex items-center gap-2 rounded-lg">
             <Logo />
             <span className="hidden font-display text-lg font-semibold tracking-tight sm:inline">

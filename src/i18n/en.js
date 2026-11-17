@@ -18,6 +18,7 @@ export default {
     skip: 'Skip to content',
     back_home: 'Leonardo Guevara, home',
     back: 'Go back',
+    next: 'Next',
   },
 
   controls: {
@@ -112,8 +113,8 @@ export default {
   skills: {
     title: 'Skills',
     subtitle: 'Technologies I have used in university, personal and applied projects.',
-    note: 'No percentage bars here. The projects show how I use these tools.',
-    see_projects: 'See them in my projects',
+    expand_all: 'Expand all',
+    collapse_all: 'Collapse all',
     groups: {
       languages: 'Programming languages',
       backend: 'Backend',
@@ -335,7 +336,7 @@ export default {
     title: 'Contact',
     subtitle: 'The fastest way to reach me is email or LinkedIn.',
     email: 'Email',
-    email_action: 'Write to me',
+    email_action: 'Email me',
     copy: 'Copy address',
     copied: 'Copied',
     linkedin: 'LinkedIn',
@@ -343,6 +344,7 @@ export default {
     github: 'GitHub',
     github_action: 'See my code',
     location: 'Location',
+    local_time: 'Local time',
     cv_title: 'Curriculum vitae',
     cv_text: 'PDF, updated for this portfolio.',
     cv_en: 'CV in English',
@@ -404,6 +406,8 @@ export default {
   },
 
   footer: {
-    made: 'Designed and built by Leonardo Guevara.',
+    made_with: 'Made with',
+    love: 'love',
+    made_by: 'by Leo',
   },
 };

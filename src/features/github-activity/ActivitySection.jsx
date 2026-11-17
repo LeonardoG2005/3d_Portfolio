@@ -1,7 +1,9 @@
 import { ArrowUpRight } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { GitHubIcon } from '../../components/ui/BrandIcons.jsx';
-import { ButtonLink, Card } from '../../components/ui/primitives.jsx';
+import CountUp from '../../components/motion/CountUp.jsx';
+import TypedLine from '../../components/motion/TypedLine.jsx';
+import { ButtonLink } from '../../components/ui/primitives.jsx';
 import { PROFILE } from '../../data/profile.js';
 import Heatmap, { formatDate } from './Heatmap.jsx';
 import { computeStats } from './stats.js';
@@ -12,10 +14,10 @@ const FIRST_YEAR = 2023; // oldest year offered in the selector
 
 function Stat({ label, value, detail }) {
   return (
-    <div>
-      <dt className="label mb-1">{label}</dt>
-      <dd className="font-display text-3xl font-semibold tabular-nums">{value}</dd>
-      {detail && <dd className="mt-0.5 text-sm text-muted">{detail}</dd>}
+    <div className="border-t border-line pt-4">
+      <dt className="label mb-3">{label}</dt>
+      <dd className="display text-[clamp(2.5rem,5.6vw,5.25rem)] tabular-nums">{value}</dd>
+      {detail && <dd className="mt-2 text-sm text-muted">{detail}</dd>}
     </div>
   );
 }
@@ -46,14 +48,16 @@ export default function ActivitySection() {
   const hasData = status === 'live' || status === 'snapshot';
 
   return (
-    <section id="activity" aria-labelledby="activity-heading" className="mt-20 scroll-mt-24">
-      <header className="mb-6 max-w-3xl">
-        <h2 id="activity-heading" className="text-3xl font-semibold sm:text-4xl">
+    <section id="activity" aria-labelledby="activity-heading" className="shell mt-28 scroll-mt-24 pb-24 sm:mt-40 sm:pb-32">
+      <header className="mb-10 grid items-end gap-6 lg:grid-cols-12">
+        <h2 id="activity-heading" className="display text-[clamp(2.5rem,7.2vw,7rem)] lg:col-span-8">
           {t('activity.title')}
         </h2>
-        <p className="mt-3 text-muted">{t('activity.subtitle', { user: PROFILE.githubUser })}</p>
+        <div className="lg:col-span-4 lg:pb-3">
+          <TypedLine text={t('activity.subtitle', { user: PROFILE.githubUser })} whenVisible />
+        </div>
       </header>
-      <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-6">
         <div role="group" aria-label={t('activity.year')} className="flex flex-wrap gap-1.5">
           {['last', ...years].map((option) => (
             <button
@@ -79,12 +83,12 @@ export default function ActivitySection() {
       </div>
 
       {status === 'loading' && (
-        <Card className="p-6" aria-busy="true">
+        <div aria-busy="true">
           <p className="sr-only" role="status">
             {t('activity.loading')}
           </p>
           <div className="h-[150px] animate-pulse rounded-xl bg-raised" />
-        </Card>
+        </div>
       )}
 
       {status === 'error' && (
@@ -103,7 +107,7 @@ export default function ActivitySection() {
 
       {hasData && (
         <>
-          <Card className="p-5 sm:p-6">
+          <div>
             <Heatmap days={days} />
             {/* Text alternative for assistive technology: totals per month. */}
             <ul className="sr-only">
@@ -113,7 +117,7 @@ export default function ActivitySection() {
                 </li>
               ))}
             </ul>
-          </Card>
+          </div>
 
           {status === 'snapshot' && (
             <p className="mt-3 text-sm text-muted" role="status">
@@ -123,15 +127,15 @@ export default function ActivitySection() {
             </p>
           )}
 
-          <dl className="mt-8 grid grid-cols-2 gap-6 md:grid-cols-4">
-            <Stat label={t('activity.total')} value={stats.total} />
-            <Stat label={t('activity.active_days')} value={stats.activeDays} />
+          <dl className="mt-14 grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
+            <Stat label={t('activity.total')} value={<CountUp value={stats.total} />} />
+            <Stat label={t('activity.active_days')} value={<CountUp value={stats.activeDays} />} />
             <Stat
               label={t('activity.best_day')}
-              value={stats.best ? stats.best.count : 0}
+              value={<CountUp value={stats.best ? stats.best.count : 0} />}
               detail={stats.best ? formatDate(stats.best.date, lang) : null}
             />
-            <Stat label={t('activity.streak')} value={t('activity.days', { n: stats.longestStreak })} />
+            <Stat label={t('activity.streak')} value={<CountUp value={stats.longestStreak} format={(n) => t('activity.days', { n })} />} />
           </dl>
           <p className="mt-8 text-sm text-muted">{t('activity.source')}</p>
         </>

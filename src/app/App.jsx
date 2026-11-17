@@ -1,5 +1,5 @@
 import { AnimatePresence, LazyMotion, MotionConfig, domAnimation } from 'motion/react';
-import { Suspense, lazy, useEffect } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router';
 import TopBar from '../components/layout/TopBar.jsx';
 import { MusicProvider } from '../features/music/MusicProvider.jsx';
@@ -17,17 +17,36 @@ const Activity = lazy(() => import('../pages/Activity.jsx'));
 const Contact = lazy(() => import('../pages/Contact.jsx'));
 const NotFound = lazy(() => import('../pages/NotFound.jsx'));
 const ChatWidget = lazy(() => import('../features/assistant/ChatWidget.jsx'));
+const Cosmos = lazy(() => import('../features/cosmos/Cosmos.jsx'));
+
+// The animated background of the content pages. Home has its own 3D room, so the scene is
+// removed there (a moment later, once the page transition has covered the screen).
+function Backdrop() {
+  const inner = useLocation().pathname !== '/';
+  const [shown, setShown] = useState(inner);
+  useEffect(() => {
+    if (inner) {
+      setShown(true);
+      return undefined;
+    }
+    const timer = window.setTimeout(() => setShown(false), 500);
+    return () => window.clearTimeout(timer);
+  }, [inner]);
+  if (!shown) return null;
+  return (
+    <Suspense fallback={null}>
+      <Cosmos />
+    </Suspense>
+  );
+}
 
 function Pages() {
   const location = useLocation();
 
-  // New page: start at the top, or at the #section the link points to once it has rendered.
+  // A link with a #section scrolls to it once the lazy page has rendered.
   useEffect(() => {
     const id = location.hash.slice(1);
-    if (!id) {
-      window.scrollTo(0, 0);
-      return undefined;
-    }
+    if (!id) return undefined; // pages scroll to the top themselves when they mount
     let tries = 0;
     const timer = window.setInterval(() => {
       const target = document.getElementById(id);
@@ -84,6 +103,7 @@ export default function App() {
                 <BrowserRouter basename={basename}>
                   <SkipLink />
                   <TopBar />
+                  <Backdrop />
                   <Pages />
                   <Suspense fallback={null}>
                     <ChatWidget />
