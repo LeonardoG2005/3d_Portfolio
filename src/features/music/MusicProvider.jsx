@@ -1,29 +1,57 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { ASSETS } from '../../data/profile.js';
+import { ASSETS, PROFILE } from '../../data/profile.js';
 import { asset } from '../../lib/paths.js';
+import { readStored, writeStored } from '../../lib/storage.js';
 
-// Background music. Nothing is created or downloaded until the visitor presses the music button.
+// Background music. Nothing is created or downloaded until the visitor presses a music control.
 // status: 'idle' | 'playing' | 'paused' | 'unavailable'
 const MusicContext = createContext(null);
+const TRACKS = ASSETS.music;
+// Pressing "previous" this far into a track restarts it instead of going back.
+const RESTART_AFTER = 3;
+
+function storedTrack() {
+  const index = Number(readStored('track'));
+  return Number.isInteger(index) && index >= 0 && index < TRACKS.length ? index : 0;
+}
 
 export function MusicProvider({ children }) {
   const [status, setStatus] = useState('idle');
+  const [track, setTrack] = useState(storedTrack);
   const audioRef = useRef(null);
   const contextRef = useRef(null);
   const analyserRef = useRef(null);
+  const trackRef = useRef(track);
   const resumeOnVisible = useRef(false);
+  const controls = useRef({});
+
+  const load = useCallback((index) => {
+    trackRef.current = index;
+    setTrack(index);
+    writeStored('track', index);
+    audioRef.current.src = asset(TRACKS[index]);
+  }, []);
+
+  const play = useCallback(() => {
+    const audio = audioRef.current;
+    contextRef.current?.resume?.().catch(() => {});
+    audio.play().catch((error) => {
+      // NotAllowedError means the browser wants another gesture. Anything else means the file cannot play.
+      if (error?.name !== 'NotAllowedError' && error?.name !== 'AbortError') setStatus('unavailable');
+    });
+  }, []);
 
   const setup = useCallback(() => {
     const audio = new Audio();
-    audio.loop = true;
     audio.preload = 'none';
-    audio.src = asset(ASSETS.music);
     audio.addEventListener('error', () => setStatus('unavailable'));
     audio.addEventListener('playing', () => setStatus('playing'));
     audio.addEventListener('pause', () => setStatus((current) => (current === 'unavailable' ? current : 'paused')));
+    audio.addEventListener('ended', () => controls.current.next?.());
     audioRef.current = audio;
+    load(trackRef.current);
 
-    // Web Audio analyser so the button bars follow the real signal. Optional: plain playback still works without it.
+    // The analyser drives the equalizer bars. Playback still works without it.
     try {
       const AudioContextClass = window.AudioContext || window.webkitAudioContext;
       const context = new AudioContextClass();
@@ -39,22 +67,69 @@ export function MusicProvider({ children }) {
       contextRef.current = null;
       analyserRef.current = null;
     }
-  }, []);
+  }, [load]);
 
   const toggle = useCallback(() => {
     if (status === 'unavailable') return;
     if (!audioRef.current) setup();
-    const audio = audioRef.current;
-    if (audio.paused) {
-      contextRef.current?.resume?.().catch(() => {});
-      audio.play().catch((error) => {
-        // NotAllowedError means the browser wants another gesture. Anything else means the file cannot play.
-        if (error?.name !== 'NotAllowedError' && error?.name !== 'AbortError') setStatus('unavailable');
-      });
-    } else {
-      audio.pause();
+    if (audioRef.current.paused) play();
+    else audioRef.current.pause();
+  }, [status, setup, play]);
+
+  const skip = useCallback(
+    (step) => {
+      if (status === 'unavailable') return;
+      if (!audioRef.current) setup();
+      const audio = audioRef.current;
+      if (step < 0 && audio.currentTime > RESTART_AFTER) {
+        audio.currentTime = 0;
+      } else {
+        load((trackRef.current + step + TRACKS.length) % TRACKS.length);
+      }
+      play();
+    },
+    [status, setup, load, play],
+  );
+
+  const next = useCallback(() => skip(1), [skip]);
+  const previous = useCallback(() => skip(-1), [skip]);
+  controls.current = { toggle, next, previous };
+
+  // Media keys, headset buttons and the lock screen control the same player.
+  useEffect(() => {
+    const session = navigator.mediaSession;
+    if (!session || status === 'idle') return;
+    if (typeof window.MediaMetadata === 'function') {
+      session.metadata = new window.MediaMetadata({ title: `Track ${track + 1}`, artist: PROFILE.shortName, album: 'Portfolio' });
     }
-  }, [status, setup]);
+    session.playbackState = status === 'playing' ? 'playing' : 'paused';
+  }, [status, track]);
+
+  useEffect(() => {
+    const session = navigator.mediaSession;
+    if (!session) return undefined;
+    const handlers = {
+      play: () => audioRef.current?.paused && controls.current.toggle(),
+      pause: () => audioRef.current && !audioRef.current.paused && controls.current.toggle(),
+      previoustrack: () => controls.current.previous(),
+      nexttrack: () => controls.current.next(),
+    };
+    Object.entries(handlers).forEach(([action, handler]) => {
+      try {
+        session.setActionHandler(action, handler);
+      } catch {
+        /* action not supported by this browser */
+      }
+    });
+    return () =>
+      Object.keys(handlers).forEach((action) => {
+        try {
+          session.setActionHandler(action, null);
+        } catch {
+          /* ignore */
+        }
+      });
+  }, []);
 
   // Do not keep playing in a hidden tab. Resume only if it was playing before.
   useEffect(() => {
@@ -81,7 +156,10 @@ export function MusicProvider({ children }) {
     [],
   );
 
-  const value = useMemo(() => ({ status, toggle, analyserRef }), [status, toggle]);
+  const value = useMemo(
+    () => ({ status, toggle, next, previous, track, total: TRACKS.length, analyserRef }),
+    [status, toggle, next, previous, track],
+  );
   return <MusicContext.Provider value={value}>{children}</MusicContext.Provider>;
 }
 

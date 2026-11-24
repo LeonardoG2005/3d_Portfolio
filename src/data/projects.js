@@ -45,7 +45,9 @@ export const PROJECTS = [
   {
     slug: 'medical-documents-api',
     accent: '#c98a1a',
-    cover: null,
+    cover: 'images/projects/medical-documents-api/cover.webp',
+    // A diagram must be seen whole, so its cover keeps its own proportions instead of being cropped.
+    coverWhole: true,
     gallery: [],
     tech: [
       'Node.js',
@@ -58,6 +60,8 @@ export const PROJECTS = [
       'Pub/Sub',
       'Terraform',
       'OpenTelemetry',
+      'k6',
+      'Chaos Toolkit',
       'Grafana',
       'GitHub Actions',
       'GCP',

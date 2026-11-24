@@ -103,6 +103,8 @@ export default function RoomHud({ ready, struggling }) {
   const activeId = useRoom((state) => state.activeId);
   const cvOpen = useRoom((state) => state.cvOpen);
   const backend = useRoom((state) => state.backend);
+  // Keeps the label up while the pointer is on it: leaving the canvas clears the 3D hover.
+  const [heldId, setHeldId] = useState(null);
   const [hintSeen, setHintSeen] = useState(() => readStored('roomHint') === '1');
   const label = useRef(null);
   const coarse = isCoarsePointer();
@@ -119,7 +121,7 @@ export default function RoomHud({ ready, struggling }) {
     setHintSeen(true);
   };
 
-  const labelId = activeId || hoverId || focusId || nearId;
+  const labelId = activeId || hoverId || focusId || nearId || heldId;
   const showAction = labelId && labelId === nearId && !activeId;
 
   return (
@@ -148,13 +150,26 @@ export default function RoomHud({ ready, struggling }) {
         </div>
       </div>
 
-      {/* Floating label, positioned every frame by LabelProjector */}
+      {/* Floating label positioned by LabelProjector. Clicking it does what E does; keyboards use the list below. */}
       <div
         ref={label}
         aria-hidden="true"
         className={`pointer-events-none absolute left-0 top-0 z-10 transition-opacity duration-200 ${labelId ? 'opacity-100' : 'opacity-0'}`}
       >
-        <div className="mb-2 flex items-center gap-2 whitespace-nowrap rounded-full border border-line bg-surface/95 py-1.5 pl-4 pr-2 text-sm font-semibold shadow-card">
+        <button
+          type="button"
+          tabIndex={-1}
+          disabled={!labelId || !!activeId}
+          onPointerEnter={() => setHeldId(labelId)}
+          onPointerLeave={() => setHeldId(null)}
+          onClick={() => {
+            setHeldId(null);
+            if (labelId) requestInteract(labelId);
+          }}
+          className={`mb-2 flex items-center gap-2 whitespace-nowrap rounded-full border border-line bg-surface/95 py-1.5 pl-4 pr-2 text-sm font-semibold shadow-card transition-colors hover:border-accent-ink ${
+            labelId && !activeId ? 'pointer-events-auto cursor-pointer' : ''
+          }`}
+        >
           {labelId ? t(`room.labels.${labelId}`) : ''}
           <span
             className={`rounded-full px-2.5 py-0.5 font-mono text-[11px] font-medium ${
@@ -163,7 +178,7 @@ export default function RoomHud({ ready, struggling }) {
           >
             {coarse ? t('room.tap') : showAction ? t('room.press') : t('room.click')}
           </span>
-        </div>
+        </button>
       </div>
 
       {/* Keyboard and screen reader route into the same destinations */}

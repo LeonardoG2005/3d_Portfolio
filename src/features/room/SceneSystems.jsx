@@ -70,7 +70,14 @@ export function ClickFloor() {
   );
 }
 
-function Marker({ item }) {
+// Lighter violet glows on the dark room; a deeper one keeps its contrast on the light room.
+const MARKER_COLORS = {
+  dark: { diamond: '#b48cff', ring: '#8f63ff', rest: 0.55 },
+  light: { diamond: '#5b2ee0', ring: '#5b2ee0', rest: 0.85 },
+};
+
+function Marker({ item, theme }) {
+  const colors = MARKER_COLORS[theme] || MARKER_COLORS.dark;
   const mesh = useRef();
   const material = useRef();
   const ring = useRef();
@@ -83,7 +90,7 @@ function Marker({ item }) {
     mesh.current.rotation.y = t * 1.2;
     const scale = highlighted ? 1.5 : 1;
     mesh.current.scale.setScalar(mesh.current.scale.x + (scale - mesh.current.scale.x) * 0.15);
-    material.current.opacity += ((highlighted ? 1 : 0.55) - material.current.opacity) * 0.15;
+    material.current.opacity += ((highlighted ? 1 : colors.rest) - material.current.opacity) * 0.15;
     ring.current.material.opacity += ((highlighted ? 0.7 : 0) - ring.current.material.opacity) * 0.15;
     ring.current.scale.setScalar(1 + Math.sin(t * 3) * 0.06);
   });
@@ -91,20 +98,20 @@ function Marker({ item }) {
   return (
     <>
       <mesh ref={mesh} position={item.label}>
-        <octahedronGeometry args={[0.075, 0]} />
-        <meshBasicMaterial ref={material} color="#4dff86" transparent opacity={0.55} toneMapped={false} />
+        <octahedronGeometry args={[0.088, 0]} />
+        <meshBasicMaterial ref={material} color={colors.diamond} transparent opacity={colors.rest} toneMapped={false} />
       </mesh>
       {/* Ring on the floor where the character will stand */}
       <mesh ref={ring} position={[item.approach.x, 0.012, item.approach.z]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.3, 0.36, 28]} />
-        <meshBasicMaterial color="#2fce5b" transparent opacity={0} depthWrite={false} toneMapped={false} />
+        <meshBasicMaterial color={colors.ring} transparent opacity={0} depthWrite={false} toneMapped={false} />
       </mesh>
     </>
   );
 }
 
 // Click volumes, floating markers and floor rings for every interactive object.
-export function Interactables() {
+export function Interactables({ theme }) {
   const { gl } = useThree();
   return INTERACTABLES.map((item) => (
     <group key={item.id}>
@@ -129,7 +136,7 @@ export function Interactables() {
         <boxGeometry args={item.hit.size} />
         <meshBasicMaterial />
       </mesh>
-      <Marker item={item} />
+      <Marker item={item} theme={theme} />
     </group>
   ));
 }

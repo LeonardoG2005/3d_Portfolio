@@ -4,7 +4,19 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import { FAQS } from '../../data/faqs.js';
 import { useT } from '../../i18n/index.jsx';
+import { asset } from '../../lib/paths.js';
 import { matchIntent } from './matcher.js';
+
+// Twelve frames of the 3D character waving, captured from the room scene.
+function Avatar({ size, wave = false }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`leo-avatar block shrink-0 rounded-full ${wave ? 'is-waving' : ''}`}
+      style={{ width: size, height: size, backgroundImage: `url(${asset('images/leo-ai.webp')})` }}
+    />
+  );
+}
 
 const QUESTION_IDS = ['who', 'tech', 'projects', 'experience', 'english', 'education', 'availability', 'cv', 'contact', 'cloud', 'ai'];
 
@@ -13,7 +25,7 @@ const QUESTION_IDS = ['who', 'tech', 'projects', 'experience', 'english', 'educa
 export default function ChatWidget() {
   const t = useT();
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState([{ from: 'bot', key: 'chat.welcome' }]);
+  const [messages, setMessages] = useState([]);
   const [typing, setTyping] = useState(false);
   const [draft, setDraft] = useState('');
   const input = useRef(null);
@@ -95,9 +107,12 @@ export default function ChatWidget() {
             className="fixed bottom-24 left-3 right-3 z-40 flex max-h-[min(34rem,calc(100dvh-8rem))] origin-bottom-right flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-card sm:left-auto sm:right-5 sm:w-[23rem]"
           >
             <header className="flex items-start justify-between gap-3 border-b border-line px-4 py-3">
-              <div>
-                <h2 className="font-display text-base font-semibold">{t('chat.title')}</h2>
-                <p className="text-xs text-muted">{t('chat.disclaimer')}</p>
+              <div className="flex items-center gap-2.5">
+                <Avatar size={34} />
+                <div>
+                  <h2 className="font-display text-base font-semibold">{t('chat.title')}</h2>
+                  <p className="text-xs text-muted">{t('chat.disclaimer')}</p>
+                </div>
               </div>
               <button
                 type="button"
@@ -110,6 +125,11 @@ export default function ChatWidget() {
             </header>
 
             <div ref={log} role="log" aria-live="polite" className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
+              <div className="flex flex-col items-center pb-2 pt-1 text-center">
+                <Avatar size={88} wave />
+                <p className="mt-3 font-display text-lg font-semibold">{t('chat.greeting')}</p>
+                <p className="text-sm text-muted">{t('chat.intro')}</p>
+              </div>
               {messages.map((message, index) => (
                 <div key={index} className={`flex ${message.from === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div

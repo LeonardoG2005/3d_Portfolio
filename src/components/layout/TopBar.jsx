@@ -37,7 +37,6 @@ export default function TopBar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close the menu whenever the route changes.
   useEffect(() => setOpen(false), [location.pathname]);
 
   return (

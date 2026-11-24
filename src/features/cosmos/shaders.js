@@ -204,18 +204,15 @@ void main() {
 }
 `;
 
-// Orbs: a port of the reference scene's distorting spheres (drei's MeshDistortMaterial).
-// The distortion is the same formula: the vertex is pushed along its own direction by
-// simplex noise sampled at position / 2, scaled by distort squared.
-// As in the reference, the normals are those of the plain sphere, not of the deformed surface,
-// which is why the result reads as a flat moving silhouette rather than a lit 3D object.
+// Orbs: each vertex is pushed along its own direction by simplex noise. The normals stay those of
+// the plain sphere, which is why the result reads as a flat moving silhouette rather than a lit object.
 export const ORB_VERT = `
 ${CAMERA}
 ${SIMPLEX}
 attribute vec3 a_pos;    // point on a unit sphere
 uniform vec3 u_center;
 uniform float u_size;    // radius on screen, in scene units
-uniform float u_radius;  // radius of the sphere in the reference scene
+uniform float u_radius;
 uniform float u_amount;  // distort * distort
 uniform float u_time;
 uniform vec3 u_spin;     // rotation around x, y, z
@@ -238,9 +235,7 @@ void main() {
 }
 `;
 
-// The reference material is black metal under one distant light: in practice a pure black shape
-// with the faintest grey sheen on the edge that faces the light. On the light theme the same flat
-// shape is white, so the dark text of the page stays readable on top of it.
+// Black with a faint sheen on the lit edge; white on the light theme so dark text stays readable on top.
 export const ORB_FRAG = `
 precision mediump float;
 uniform vec3 u_eye;
@@ -251,7 +246,7 @@ void main() {
   vec3 n = normalize(v_normal);
   vec3 v = normalize(u_eye - v_world);
   float edge = pow(1.0 - clamp(abs(dot(n, v)), 0.0, 1.0), 4.0);
-  float lit = max(dot(n, normalize(vec3(1.0, 1.0, 1.0))), 0.0); // the reference light sits at (10, 10, 10)
+  float lit = max(dot(n, normalize(vec3(1.0, 1.0, 1.0))), 0.0);
   vec3 night = vec3(0.085, 0.09, 0.085) * edge * lit;
   vec3 day = vec3(1.0) - vec3(0.03, 0.025, 0.035) * edge * (1.0 - lit);
   gl_FragColor = vec4(mix(day, night, u_dark), 1.0);

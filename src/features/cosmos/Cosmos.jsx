@@ -3,10 +3,7 @@ import { useLocation } from 'react-router';
 import { createCosmos } from './engine.js';
 import { presetFor } from './presets.js';
 
-// Living background for every content page: a nebula, a deep star field, tumbling wireframe solids
-// and four flat, slowly deforming orbs, drawn on one fixed canvas behind the page. It stays mounted while moving
-// between content pages, so the scene rearranges itself instead of restarting.
-// Without WebGL nothing is drawn and the plain page colour remains.
+// Background of the content pages. It stays mounted between them, so the scene rearranges instead of restarting.
 export default function Cosmos() {
   const { pathname } = useLocation();
   const canvas = useRef(null);

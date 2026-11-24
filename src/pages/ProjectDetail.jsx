@@ -122,7 +122,7 @@ export default function ProjectDetail() {
         </div>
 
         <div className="cover-frame">
-          <div className="cover-clip h-[min(86vh,58vw)] min-h-[15rem] overflow-hidden bg-raised">
+          <div className={`cover-clip overflow-hidden bg-raised ${project.coverWhole ? 'aspect-[16/10]' : 'h-[min(86vh,58vw)] min-h-[15rem]'}`}>
             <SmartImage
               src={project.cover}
               name={copy.name}
@@ -233,7 +233,7 @@ export default function ProjectDetail() {
               <NumberedList items={copy.decisions} />
             </Section>
 
-            {project.gallery.length > 0 ? (
+            {project.gallery.length > 0 && (
               <section className="border-t border-line py-10 sm:py-14">
                 <h2 className="serif mb-6 text-4xl sm:text-5xl">{t('projects.gallery')}</h2>
                 <ul className="grid gap-4 sm:grid-cols-2">
@@ -251,8 +251,6 @@ export default function ProjectDetail() {
                   ))}
                 </ul>
               </section>
-            ) : (
-              project.links.demo && <p className="border-t border-line pt-8 text-sm text-muted">{t('projects.gallery_empty')}</p>
             )}
           </div>
         </div>

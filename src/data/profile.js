@@ -8,7 +8,7 @@ export const PROFILE = {
   links: {
     github: 'https://github.com/LeonardoG2005',
     linkedin: 'https://www.linkedin.com/in/leotuvstarr/',
-    bankMarketing: 'https://github.com/LeonardoG2005/Bank-Marketing-Database',
+    amazonReviewsNlp: 'https://github.com/LeonardoG2005/AmazonReviews_NLP',
     ielts: 'https://www.linkedin.com/in/leotuvstarr/details/certifications/',
   },
 };
@@ -21,6 +21,6 @@ export const ASSETS = {
     en: 'cv/Leonardo_Guevara_CV_EN.pdf',
     es: 'cv/Leonardo_Guevara_CV_ES.pdf',
   },
-  music: 'audio/portfolio-track.mp3',
+  music: ['audio/portfolio-track.mp3', 'audio/portfolio-track-2.mp3', 'audio/portfolio-track-3.mp3'],
   photo: 'images/profile/leonardo.jpg',
 };

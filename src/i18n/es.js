@@ -28,6 +28,9 @@ export default {
     music_play: 'Reproducir música de fondo',
     music_pause: 'Pausar música de fondo',
     music_unavailable: 'La música no está disponible en este momento',
+    music_previous: 'Canción anterior',
+    music_next: 'Siguiente canción',
+    music_track: 'Canción {n} de {total}',
     mode_room: 'Cambiar a la habitación 3D',
     mode_lite: 'Cambiar a la vista sencilla',
     mode_room_short: '3D',
@@ -89,7 +92,7 @@ export default {
     title: 'Sobre mí',
     subtitle: 'Estudiante de Ingeniería de Software en Medellín que construye cosas que llegan a producción.',
     paragraphs: [
-      'Soy Leonardo, estudiante de Ingeniería de Software en la Universidad de Medellín (noveno semestre), con 5 años de experiencia práctica en desarrollo de software a través de proyectos académicos, personales y aplicados.',
+      'Soy Leonardo, estudiante de Ingeniería de Software en la Universidad de Medellín (décimo semestre), con 5 años de experiencia práctica en desarrollo de software a través de proyectos académicos, personales y aplicados.',
       'Trabajo en todo el stack, pero lo que más disfruto es la ingeniería de backend y los sistemas centrados en datos: APIs, bases de datos, infraestructura en la nube y los flujos que los conectan. Me importan el código limpio, una arquitectura clara y las decisiones que se pueden explicar.',
       'Uno de mis proyectos, FluxLab, es un sistema de gestión de información de laboratorio que hoy usa el Laboratorio de Biotecnología de la Universidad de Medellín. Construir algo de lo que dependen personas reales me enseñó más que cualquier curso.',
       'Fuera de la universidad estudio aprendizaje automático e ingeniería de datos. Completé la Machine Learning Specialization de DeepLearning.AI y la ruta Data Engineer in Python de DataCamp, y tengo un certificado IELTS Academic de nivel C1.',
@@ -130,7 +133,7 @@ export default {
 
   projects: {
     title: 'Proyectos',
-    subtitle: 'Sistemas que diseñé y construí, solo o en equipo.',
+    subtitle: 'Proyectos que diseñé y construí.',
     view: 'Ver proyecto',
     back: 'Todos los proyectos',
     live: 'Demo en vivo',
@@ -144,7 +147,6 @@ export default {
     decisions: 'Decisiones técnicas',
     stack: 'Tecnologías',
     gallery: 'Capturas',
-    gallery_empty: 'Las capturas están en camino. La demo en vivo muestra el sistema real.',
     links: 'Enlaces',
     team: 'Construido con',
     demo_access: 'Acceso a la demo',
@@ -217,13 +219,13 @@ export default {
       'medical-documents-api': {
         name: 'Medical Documents API',
         tagline: 'API REST y orquestador orientado a eventos en un sistema multicloud entre GCP, AWS y OCI.',
-        status: 'Proyecto del curso de DevOps, cuatro entregas',
+        status: 'Proyecto del curso de DevOps, cinco entregas',
         overview:
           'Un sistema distribuido formado por tres API REST desplegadas de forma independiente, una por nube, coordinadas por un orquestador asíncrono. Yo estoy a cargo de la API de documentos médicos y del orquestador, ambos en Google Cloud. Dos compañeros están a cargo de las API en AWS y OCI.',
         problem:
           'El curso pedía más que un servicio CRUD: equipos independientes debían integrar sus API entre nubes, desplegarlas de forma reproducible, observarlas de extremo a extremo y publicar versiones nuevas sin interrupciones.',
         role:
-          'Construí la API con Fastify, el orquestador con Pub/Sub, los despliegues en Kubernetes y Cloud Run, la infraestructura con Terraform, los pipelines de CI/CD y la observabilidad del lado de GCP.',
+          'Construí la API con Fastify, el orquestador con Pub/Sub, los despliegues en Kubernetes y Cloud Run, la infraestructura con Terraform, los pipelines de CI/CD, la observabilidad y la plataforma de ingeniería del caos del lado de GCP.',
         architecture: [
           'API con Fastify sobre Node.js y PostgreSQL. Tres entidades en cadena: imagen, nota médica y documento generado.',
           'Orquestador en Cloud Run que publica y consume eventos con Google Cloud Pub/Sub, con confirmación de mensajes, reintentos automáticos y propagación de trazas entre nubes.',
@@ -236,6 +238,8 @@ export default {
           'Endpoints CRUD y el método HTTP QUERY para lecturas con filtros.',
           'CI/CD con ambientes separados de pruebas y producción, y umbrales de cobertura.',
           'Canary deployment en Cloud Run con objetivos de nivel de servicio, puerta de calidad y rollback automático.',
+          'Ingeniería del caos en GKE: latencia inyectada y medida con k6 y Chaos Toolkit, mitigada con timeouts, circuit breaker y degradación elegante, y controlada en CI/CD.',
+          'Game day de seguridad: tokens efímeros firmados, reglas de detección como código, copias aisladas con retención y contención con aprobación humana.',
           'Flujo de Git con ramas de funcionalidad, pull requests y commits con GitMoji.',
         ],
         decisions: [
@@ -284,7 +288,7 @@ export default {
         period: 'Julio de 2022 a la actualidad',
         title: 'Ingeniería de Software',
         place: 'Universidad de Medellín, Colombia',
-        text: 'Noveno semestre. Cursos de algoritmos y estructuras de datos, diseño orientado a objetos, bases de datos, redes, arquitectura de software, pruebas, seguridad, desarrollo web y móvil, y DevOps.',
+        text: 'Décimo semestre. Cursos de algoritmos y estructuras de datos, diseño orientado a objetos, bases de datos, redes, arquitectura de software, pruebas, seguridad, desarrollo web y móvil, DevOps, entre otros.',
       },
       ielts: {
         period: 'Certificado',
@@ -302,7 +306,7 @@ export default {
         period: 'Certificado',
         title: 'Ruta Data Engineer in Python',
         place: 'DataCamp',
-        text: 'Ingeniería de datos práctica: procesamiento y transformación de datos con Pandas y SQL, y construcción de flujos de trabajo sobre conjuntos de datos estructurados.',
+        text: 'Ingeniería de datos práctica: procesamiento y transformación de datos con Pandas y SQL, construcción de flujos de trabajo y pipelines ETL y ELT automatizados con Apache Airflow.',
       },
     },
   },
@@ -334,7 +338,7 @@ export default {
 
   contact: {
     title: 'Contacto',
-    subtitle: 'La forma más rápida de encontrarme es por correo o LinkedIn.',
+    subtitle: 'La forma más rápida de contactarme es por correo o LinkedIn.',
     email: 'Correo',
     email_action: 'Envíame un correo',
     copy: 'Copiar dirección',
@@ -342,30 +346,30 @@ export default {
     linkedin: 'LinkedIn',
     linkedin_action: 'Conecta conmigo',
     github: 'GitHub',
-    github_action: 'Mira mi código',
+    github_action: '',
     location: 'Ubicación',
     local_time: 'Hora local',
     cv_title: 'Hoja de vida',
-    cv_text: 'PDF, actualizado para este portafolio.',
+    cv_text: 'Descargar en PDF',
     cv_en: 'CV en inglés',
     cv_es: 'CV en español',
     cv_missing: 'El CV estará disponible aquí pronto.',
   },
 
   chat: {
-    open: 'Abrir el asistente de preguntas',
-    close: 'Cerrar el asistente',
-    title: 'Pregunta sobre Leonardo',
+    open: 'Abrir Leo AI',
+    close: 'Cerrar Leo AI',
+    title: 'Leo AI',
     disclaimer: 'Asistente con respuestas preparadas.',
-    welcome:
-      '¡Hola! Soy un pequeño asistente con respuestas preparadas. Puedo responder preguntas frecuentes sobre Leonardo. Elige una de estas o escribe la tuya.',
+    greeting: '¡Hola! Soy Leo AI',
+    intro: 'Pregunta lo que quieras sobre Leonardo',
     placeholder: 'Escribe una pregunta',
     send: 'Enviar',
-    typing: 'El asistente está escribiendo',
+    typing: 'Leo AI está escribiendo',
     suggestions_label: 'Preguntas sugeridas',
     open_page: 'Abrir la página',
     you: 'Tú',
-    assistant: 'Asistente',
+    assistant: 'Leo AI',
     fallback:
       'No tengo una respuesta preparada para eso. Puedo contarte sobre estos temas, o puedes escribirle directamente a Leonardo desde la página de Contacto.',
     questions: {
@@ -382,17 +386,17 @@ export default {
       ai: '¿Tiene experiencia con inteligencia artificial?',
     },
     answers: {
-      who: 'Leonardo Guevara Atehortúa es estudiante de Ingeniería de Software en la Universidad de Medellín, cursa noveno semestre y vive en Medellín, Colombia. Trabaja en todo el stack, con especial interés en backend, datos y sistemas en la nube.',
+      who: 'Leonardo Guevara Atehortúa es estudiante de Ingeniería de Software en la Universidad de Medellín, cursa décimo semestre y vive en Medellín, Colombia. Trabaja en todo el stack, con especial interés en backend, datos y sistemas en la nube.',
       tech: 'Sus herramientas principales son Python, TypeScript, JavaScript y SQL, con NestJS, Node.js y Django en el backend y React y Angular en el frontend. También trabaja con PostgreSQL, Docker, Kubernetes, Google Cloud, Terraform, Pandas, Scikit-learn y LangChain. La lista completa está en la página de Habilidades.',
       projects: 'Aquí se destacan cuatro proyectos: FluxLab (un sistema de gestión de laboratorio en uso en la Universidad de Medellín), FocusHub (una plataforma de productividad), Medical Documents API (un proyecto DevOps multicloud) y Ergonominador (un monitor de postura IoT).',
       experience: 'Tiene 5 años de experiencia práctica en desarrollo de software a través de proyectos académicos, personales y aplicados. Su experiencia viene de proyectos más que de empleos formales. El más aplicado es FluxLab, que el Laboratorio de Biotecnología de la Universidad de Medellín usa a diario.',
       english: 'C1, certificado mediante IELTS Academic. El español es su lengua materna.',
-      education: 'Estudia Ingeniería de Software en la Universidad de Medellín (desde julio de 2022, noveno semestre). Además completó la Machine Learning Specialization de DeepLearning.AI y la ruta Data Engineer in Python de DataCamp.',
+      education: 'Estudia Ingeniería de Software en la Universidad de Medellín (desde julio de 2022, décimo semestre). Además completó la Machine Learning Specialization de DeepLearning.AI y la ruta Data Engineer in Python de DataCamp.',
       availability: 'Lo mejor es preguntarle directamente. Puedes escribirle por correo o LinkedIn desde la página de Contacto y te responderá.',
       cv: 'Puedes descargar su CV en inglés o en español desde la página de Contacto, o desde el menú.',
       contact: 'Escríbele a leosowilo2005@gmail.com o envíale un mensaje por LinkedIn (leotuvstarr). Ambos enlaces están en la página de Contacto.',
       cloud: 'En el proyecto Medical Documents API desplegó una API con Fastify en GKE con autoescalado y sondas de salud, un orquestador en Cloud Run con Pub/Sub, infraestructura con Terraform, pipelines de CI/CD, despliegues canary con rollback automático y observabilidad con OpenTelemetry y Grafana, en un sistema que abarca GCP, AWS y OCI.',
-      ai: 'Sí. Completó la Machine Learning Specialization de DeepLearning.AI, trabaja con Pandas, NumPy, Scikit-learn y TensorFlow, y construyó un clasificador de marketing bancario que compara regresión logística y SVM con validación cruzada. También ha trabajado con LangChain, LangGraph, el SDK de OpenAI y MCP para herramientas de agentes.',
+      ai: 'Sí. Completó la Machine Learning Specialization de DeepLearning.AI, trabaja con Pandas, NumPy, Scikit-learn y TensorFlow, y ajustó BETO, un modelo BERT en español, con Hugging Face Transformers para clasificar reseñas de Amazon por sentimiento (93,9 % de exactitud entre positivas y negativas). También ha trabajado con LangChain, LangGraph, el SDK de OpenAI y MCP para herramientas de agentes.',
       location: 'Vive en Medellín, Colombia.',
       site: 'Este portafolio está hecho con React, Vite, Tailwind CSS y Three.js mediante React Three Fiber. La habitación se renderiza con WebGPU cuando el navegador lo permite, usa WebGL 2 como respaldo y tiene una versión 2D sencilla para todo lo demás.',
       greeting: '¡Hola! Pregúntame lo que quieras sobre Leonardo o elige una de las preguntas sugeridas.',

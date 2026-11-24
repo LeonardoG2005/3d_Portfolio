@@ -15,19 +15,18 @@ const ICONS = {
   contact: Mail,
 };
 
-// Timing and motion follow the reference navbar: blur fades in, items rise in with a staggered spring,
-// and on hover an item grows slightly and slides right while its underline extends.
+// Blur fades in, items rise with a staggered spring; on hover an item grows and slides right as its underline extends.
 const scrim = {
   closed: { opacity: 0, transition: { duration: 0.3 } },
   open: { opacity: 1, transition: { duration: 0.4 } },
 };
 const list = {
   closed: { transition: { staggerChildren: 0.04, staggerDirection: -1 } },
-  open: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
+  open: { transition: { staggerChildren: 0.16, delayChildren: 0.22 } },
 };
 const item = {
   closed: { opacity: 0, y: 20, scale: 1, x: 0 },
-  open: { opacity: 1, y: 0, scale: 1, x: 0, transition: { type: 'spring', stiffness: 100, duration: 0.5 } },
+  open: { opacity: 1, y: 0, scale: 1, x: 0, transition: { type: 'spring', stiffness: 100, duration: 0.7 } },
   hover: { scale: 1.05, x: 10, transition: { type: 'spring', stiffness: 300, damping: 20 } },
   tap: { scale: 0.95 },
 };
@@ -131,7 +130,7 @@ export default function OverlayMenu({ open, onClose }) {
                         </m.span>
                         <span>{t(`nav.${route.id}`)}</span>
                       </NavLink>
-                      {/* Underline in the text colour, as in the reference: on for the current page, grows on hover */}
+                      {/* On for the current page, grows on hover */}
                       <m.span
                         aria-hidden="true"
                         variants={underline(active)}

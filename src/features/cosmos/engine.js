@@ -18,7 +18,7 @@ const FOCAL = 1 / Math.tan(FOV / 2);
 const CAM_Z = 6;
 const HALF_H = Math.tan(FOV / 2) * CAM_Z; // half the visible height at z = 0, in world units
 const PARALLAX = HALF_H * 2 * 0.3; // stars and wireframes move at 30% of the page's scroll speed
-// One unit of the reference scene on our screen: its large orb (radius 2) is as tall as the window.
+// One orb unit on screen: the large orb (radius 2) is as tall as the window.
 const UNIT = HALF_H / 2;
 const GROUP_FIELDS = ['x', 'y', 's'];
 
@@ -40,7 +40,6 @@ function compile(gl, vertex, fragment, attributes) {
   gl.deleteShader(vs);
   gl.deleteShader(fs);
   if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(program));
-  // Uniform locations are looked up once and kept.
   const uniforms = {};
   const count = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
   for (let index = 0; index < count; index += 1) {
@@ -79,7 +78,6 @@ export function createCosmos(canvas, { reduced = false } = {}) {
     return handle;
   };
 
-  // --- geometry ---
   const quad = buffer(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]));
 
   const starCount = small ? 3200 : 7000;
@@ -111,7 +109,7 @@ export function createCosmos(canvas, { reduced = false } = {}) {
     violet: index % 3 === 0,
   }));
 
-  // --- low resolution target for the nebula ---
+  // Low resolution target for the nebula.
   const nebula = { texture: gl.createTexture(), frame: gl.createFramebuffer(), width: 0, height: 0, ok: true };
   gl.bindTexture(gl.TEXTURE_2D, nebula.texture);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
@@ -119,7 +117,6 @@ export function createCosmos(canvas, { reduced = false } = {}) {
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
-  // --- state ---
   // Where the group of orbs sits and how large it is; it glides between pages.
   const group = { current: null, target: null };
   const state = {
@@ -276,7 +273,7 @@ export function createCosmos(canvas, { reduced = false } = {}) {
       }
     }
 
-    // 4. Orbs: the reference scene's four spheres, flat and drawn over everything else.
+    // 4. Orbs, drawn over everything else.
     if (group.current) {
       gl.disable(gl.BLEND);
       // Depth testing keeps the near side of each orb on top of its far side.
@@ -302,7 +299,7 @@ export function createCosmos(canvas, { reduced = false } = {}) {
       for (const orb of ORBS) {
         const [px, py] = orb.position(time);
         const [rx, ry, rz] = orb.rotation(time);
-        // drei's Float: a slow bob whose height is its intensity.
+        // Slow bob whose height is its intensity.
         const bob = (Math.sin((time / 4) * orb.float.speed) / 10) * orb.float.intensity;
         gl.uniform3f(u.u_center, originX + px * unit * spread, originY + (py + bob) * unit, 0);
         gl.uniform1f(u.u_size, orb.radius * orb.scale * unit);
