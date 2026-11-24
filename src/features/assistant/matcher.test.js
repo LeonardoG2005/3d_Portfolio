@@ -19,6 +19,13 @@ describe('assistant matcher', () => {
     expect(matchIntent('hola')).toBe('greeting');
     expect(matchIntent('how did you make this 3d room')).toBe('site');
     expect(matchIntent('qué lenguajes maneja')).toBe('tech');
+    expect(matchIntent('does he know react?')).toBe('tech');
+    expect(matchIntent('tell me about him')).toBe('who');
+    expect(matchIntent('what tech does Leonardo use?')).toBe('tech');
+    expect(matchIntent('is there a live demo of his projects?')).toBe('projects');
+    expect(matchIntent('¿en qué semestre está?')).toBe('education');
+    expect(matchIntent('can I call him?')).toBe('contact');
+    expect(matchIntent('¿sabe de ingeniería del caos?')).toBe('cloud');
   });
 
   it('returns null for unknown questions', () => {
