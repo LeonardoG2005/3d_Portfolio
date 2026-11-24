@@ -355,19 +355,19 @@ export default {
   },
 
   chat: {
-    open: 'Abrir el asistente de preguntas',
-    close: 'Cerrar el asistente',
-    title: 'Pregunta sobre Leonardo',
+    open: 'Abrir Leo AI',
+    close: 'Cerrar Leo AI',
+    title: 'Leo AI',
     disclaimer: 'Asistente con respuestas preparadas.',
-    welcome:
-      '¡Hola! Soy un pequeño asistente con respuestas preparadas. Puedo responder preguntas frecuentes sobre Leonardo. Elige una de estas o escribe la tuya.',
+    greeting: '¡Hola! Soy Leo AI',
+    intro: 'Pregunta lo que quieras sobre Leonardo',
     placeholder: 'Escribe una pregunta',
     send: 'Enviar',
-    typing: 'El asistente está escribiendo',
+    typing: 'Leo AI está escribiendo',
     suggestions_label: 'Preguntas sugeridas',
     open_page: 'Abrir la página',
     you: 'Tú',
-    assistant: 'Asistente',
+    assistant: 'Leo AI',
     fallback:
       'No tengo una respuesta preparada para eso. Puedo contarte sobre estos temas, o puedes escribirle directamente a Leonardo desde la página de Contacto.',
     questions: {

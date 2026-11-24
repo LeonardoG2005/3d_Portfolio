@@ -355,19 +355,19 @@ export default {
   },
 
   chat: {
-    open: 'Open the questions assistant',
-    close: 'Close the assistant',
-    title: 'Ask about Leonardo',
+    open: 'Open Leo AI',
+    close: 'Close Leo AI',
+    title: 'Leo AI',
     disclaimer: 'Scripted assistant with prepared answers.',
-    welcome:
-      'Hi! I am a small scripted assistant. I can answer common questions about Leonardo with prepared answers. Pick one of these or type your own.',
+    greeting: "Hi! I'm Leo AI",
+    intro: 'Ask me anything about Leonardo',
     placeholder: 'Type a question',
     send: 'Send',
-    typing: 'Assistant is typing',
+    typing: 'Leo AI is typing',
     suggestions_label: 'Suggested questions',
     open_page: 'Open the page',
     you: 'You',
-    assistant: 'Assistant',
+    assistant: 'Leo AI',
     fallback:
       'I do not have a prepared answer for that. I can tell you about these topics, or you can write to Leonardo directly from the Contact page.',
     questions: {
