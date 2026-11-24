@@ -346,7 +346,7 @@ export default {
     linkedin: 'LinkedIn',
     linkedin_action: 'Conecta conmigo',
     github: 'GitHub',
-    github_action: 'Mira mi código',
+    github_action: '',
     location: 'Ubicación',
     local_time: 'Hora local',
     cv_title: 'Hoja de vida',
