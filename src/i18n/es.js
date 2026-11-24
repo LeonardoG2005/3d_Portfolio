@@ -147,7 +147,6 @@ export default {
     decisions: 'Decisiones técnicas',
     stack: 'Tecnologías',
     gallery: 'Capturas',
-    gallery_empty: 'Las capturas están en camino. La demo en vivo muestra el sistema real.',
     links: 'Enlaces',
     team: 'Construido con',
     demo_access: 'Acceso a la demo',

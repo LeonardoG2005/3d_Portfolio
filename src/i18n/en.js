@@ -147,7 +147,6 @@ export default {
     decisions: 'Technical decisions',
     stack: 'Technology stack',
     gallery: 'Screenshots',
-    gallery_empty: 'Screenshots are on the way. The live demo shows the real thing.',
     links: 'Links',
     team: 'Built with',
     demo_access: 'Demo access',
