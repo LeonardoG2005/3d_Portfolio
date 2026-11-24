@@ -14,7 +14,21 @@ export default function TerminalLink({ to, children, className = '' }) {
 
   useEffect(() => {
     const state = run.current;
-    return () => cancelAnimationFrame(state.frame);
+    const element = canvasRef.current.parentElement;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        startRef.current();
+        stopRef.current();
+      },
+      { threshold: 0.9 },
+    );
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(state.frame);
+    };
   }, []);
 
   const start = () => {
@@ -36,7 +50,7 @@ export default function TerminalLink({ to, children, className = '' }) {
     const color = getComputedStyle(canvas).color;
 
     const began = performance.now();
-    const decodeTime = 520;
+    const decodeTime = 900;
     let last = 0;
     const tick = (now) => {
       const progress = Math.min(1, (now - began) / decodeTime);
@@ -67,6 +81,10 @@ export default function TerminalLink({ to, children, className = '' }) {
   const stop = () => {
     run.current.active = false;
   };
+  const startRef = useRef(start);
+  const stopRef = useRef(stop);
+  startRef.current = start;
+  stopRef.current = stop;
 
   return (
     <Link
