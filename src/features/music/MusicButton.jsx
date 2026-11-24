@@ -1,3 +1,4 @@
+import { Pause, Play, SkipBack, SkipForward } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { useT } from '../../i18n/index.jsx';
 import { useMusic } from './MusicProvider.jsx';
@@ -10,10 +11,11 @@ const BANDS = [
   [11, 18],
 ];
 
-// Green pill with four dots that turn into four moving equalizer bars while music plays.
+// Compact player: previous, play/pause and next. While music plays the green button shows
+// four equalizer bars that follow the real signal; hovering or focusing it shows the pause icon.
 export default function MusicButton() {
   const t = useT();
-  const { status, toggle, analyserRef } = useMusic();
+  const { status, toggle, next, previous, track, total, analyserRef } = useMusic();
   const barsRef = useRef(null);
   const playing = status === 'playing';
   const unavailable = status === 'unavailable';
@@ -59,30 +61,73 @@ export default function MusicButton() {
   }, [hasAnalyser, analyserRef]);
 
   const label = unavailable ? t('controls.music_unavailable') : playing ? t('controls.music_pause') : t('controls.music_play');
+  const trackLabel = status === 'idle' ? '' : ` · ${t('controls.music_track', { n: track + 1, total })}`;
+  const key = 'music-key grid h-7 w-6 place-items-center rounded-full disabled:cursor-not-allowed';
 
   return (
-    <button
-      type="button"
-      onClick={toggle}
-      aria-pressed={playing}
-      aria-label={label}
-      title={label}
-      aria-disabled={unavailable}
-      className={`grid h-11 w-11 place-items-center rounded-full transition-transform active:scale-95 ${
-        unavailable ? 'cursor-not-allowed opacity-45' : 'hover:scale-105'
-      }`}
+    <div
+      role="group"
+      aria-label={label + trackLabel}
+      className={`music-player flex h-10 w-[88px] items-center justify-between rounded-full px-1 ${unavailable ? 'opacity-45' : ''}`}
     >
-      <span
-        ref={barsRef}
-        className={`flex h-8 w-11 items-end justify-center gap-[3px] rounded-[9px] bg-accent pb-[6px] shadow-[0_0_0_1px_rgb(0_0_0/0.12)] ${
-          playing ? `eq-on music-pill-on ${hasAnalyser ? '' : 'eq-css'}` : ''
-        }`}
+      <button
+        type="button"
+        onClick={previous}
+        disabled={unavailable}
+        aria-label={t('controls.music_previous')}
+        title={t('controls.music_previous')}
+        className={key}
       >
-        <span className="eq-bar" />
-        <span className="eq-bar" />
-        <span className="eq-bar" />
-        <span className="eq-bar" />
-      </span>
-    </button>
+        <SkipBack size={13} fill="currentColor" aria-hidden="true" />
+      </button>
+
+      <button
+        type="button"
+        onClick={toggle}
+        aria-pressed={playing}
+        aria-label={label}
+        title={label + trackLabel}
+        aria-disabled={unavailable}
+        className={`music-play group relative grid h-8 w-8 shrink-0 place-items-center rounded-full bg-accent text-on-accent transition-transform active:scale-95 ${
+          unavailable ? 'cursor-not-allowed' : 'hover:scale-105'
+        } ${playing ? 'music-pill-on' : ''}`}
+      >
+        {playing ? (
+          <>
+            <span
+              ref={barsRef}
+              aria-hidden="true"
+              className={`eq-on flex h-4 items-end justify-center gap-[2px] transition-opacity group-hover:opacity-0 group-focus-visible:opacity-0 ${
+                hasAnalyser ? '' : 'eq-css'
+              }`}
+            >
+              <span className="eq-bar" />
+              <span className="eq-bar" />
+              <span className="eq-bar" />
+              <span className="eq-bar" />
+            </span>
+            <Pause
+              size={14}
+              fill="currentColor"
+              aria-hidden="true"
+              className="absolute opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
+            />
+          </>
+        ) : (
+          <Play size={14} fill="currentColor" aria-hidden="true" className="translate-x-[1px]" />
+        )}
+      </button>
+
+      <button
+        type="button"
+        onClick={next}
+        disabled={unavailable}
+        aria-label={t('controls.music_next')}
+        title={t('controls.music_next')}
+        className={key}
+      >
+        <SkipForward size={13} fill="currentColor" aria-hidden="true" />
+      </button>
+    </div>
   );
 }

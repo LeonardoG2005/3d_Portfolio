@@ -21,6 +21,6 @@ export const ASSETS = {
     en: 'cv/Leonardo_Guevara_CV_EN.pdf',
     es: 'cv/Leonardo_Guevara_CV_ES.pdf',
   },
-  music: 'audio/portfolio-track.mp3',
+  music: ['audio/portfolio-track.mp3', 'audio/portfolio-track-2.mp3', 'audio/portfolio-track-3.mp3'],
   photo: 'images/profile/leonardo.jpg',
 };
