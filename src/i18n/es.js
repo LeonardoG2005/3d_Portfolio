@@ -348,7 +348,7 @@ export default {
     location: 'Ubicación',
     local_time: 'Hora local',
     cv_title: 'Hoja de vida',
-    cv_text: 'PDF, actualizado para este portafolio.',
+    cv_text: 'Descargar en PDF',
     cv_en: 'CV en inglés',
     cv_es: 'CV en español',
     cv_missing: 'El CV estará disponible aquí pronto.',

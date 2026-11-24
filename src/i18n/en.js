@@ -348,7 +348,7 @@ export default {
     location: 'Location',
     local_time: 'Local time',
     cv_title: 'Curriculum vitae',
-    cv_text: 'PDF, updated for this portfolio.',
+    cv_text: 'Download as PDF',
     cv_en: 'CV in English',
     cv_es: 'CV in Spanish',
     cv_missing: 'The CV will be available here soon.',
