@@ -58,6 +58,8 @@ export const PROJECTS = [
       'Pub/Sub',
       'Terraform',
       'OpenTelemetry',
+      'k6',
+      'Chaos Toolkit',
       'Grafana',
       'GitHub Actions',
       'GCP',

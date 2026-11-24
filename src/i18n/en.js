@@ -219,13 +219,13 @@ export default {
       'medical-documents-api': {
         name: 'Medical Documents API',
         tagline: 'REST API and event-driven orchestrator in a multicloud system across GCP, AWS and OCI.',
-        status: 'DevOps course project, four releases',
+        status: 'DevOps course project, five releases',
         overview:
           'A distributed system made of three independently deployed REST APIs, one per cloud, coordinated by an asynchronous orchestrator. I own the medical documents API and the orchestrator, both on Google Cloud. Two classmates own the APIs on AWS and OCI.',
         problem:
           'The course asked for more than a CRUD service: independent teams had to integrate their APIs across clouds, deploy them reproducibly, observe them end to end and release new versions without downtime.',
         role:
-          'I built the Fastify API, the Pub/Sub orchestrator, the Kubernetes and Cloud Run deployments, the Terraform infrastructure, the CI/CD pipelines and the observability setup for the GCP side.',
+          'I built the Fastify API, the Pub/Sub orchestrator, the Kubernetes and Cloud Run deployments, the Terraform infrastructure, the CI/CD pipelines, the observability setup and the chaos engineering platform for the GCP side.',
         architecture: [
           'Fastify API on Node.js with PostgreSQL. Three entities in a chain: image, medical note and generated document.',
           'Orchestrator on Cloud Run that publishes and consumes events through Google Cloud Pub/Sub, with acknowledgments, automatic retries and trace propagation between clouds.',
@@ -238,6 +238,8 @@ export default {
           'CRUD endpoints plus the HTTP QUERY method for filtered reads.',
           'CI/CD with separate test and production environments and coverage gates.',
           'Canary deployment on Cloud Run with service level objectives, a quality gate and automatic rollback.',
+          'Chaos engineering on GKE: injected latency measured with k6 and Chaos Toolkit, answered with timeouts, a circuit breaker and graceful degradation, and gated in CI/CD.',
+          'Security game day: short-lived signed tokens, detection rules as code, isolated backups with retention and human-approved containment.',
           'Git workflow with feature branches, pull requests and GitMoji commits.',
         ],
         decisions: [

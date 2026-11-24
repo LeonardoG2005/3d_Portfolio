@@ -219,13 +219,13 @@ export default {
       'medical-documents-api': {
         name: 'Medical Documents API',
         tagline: 'API REST y orquestador orientado a eventos en un sistema multicloud entre GCP, AWS y OCI.',
-        status: 'Proyecto del curso de DevOps, cuatro entregas',
+        status: 'Proyecto del curso de DevOps, cinco entregas',
         overview:
           'Un sistema distribuido formado por tres API REST desplegadas de forma independiente, una por nube, coordinadas por un orquestador asíncrono. Yo estoy a cargo de la API de documentos médicos y del orquestador, ambos en Google Cloud. Dos compañeros están a cargo de las API en AWS y OCI.',
         problem:
           'El curso pedía más que un servicio CRUD: equipos independientes debían integrar sus API entre nubes, desplegarlas de forma reproducible, observarlas de extremo a extremo y publicar versiones nuevas sin interrupciones.',
         role:
-          'Construí la API con Fastify, el orquestador con Pub/Sub, los despliegues en Kubernetes y Cloud Run, la infraestructura con Terraform, los pipelines de CI/CD y la observabilidad del lado de GCP.',
+          'Construí la API con Fastify, el orquestador con Pub/Sub, los despliegues en Kubernetes y Cloud Run, la infraestructura con Terraform, los pipelines de CI/CD, la observabilidad y la plataforma de ingeniería del caos del lado de GCP.',
         architecture: [
           'API con Fastify sobre Node.js y PostgreSQL. Tres entidades en cadena: imagen, nota médica y documento generado.',
           'Orquestador en Cloud Run que publica y consume eventos con Google Cloud Pub/Sub, con confirmación de mensajes, reintentos automáticos y propagación de trazas entre nubes.',
@@ -238,6 +238,8 @@ export default {
           'Endpoints CRUD y el método HTTP QUERY para lecturas con filtros.',
           'CI/CD con ambientes separados de pruebas y producción, y umbrales de cobertura.',
           'Canary deployment en Cloud Run con objetivos de nivel de servicio, puerta de calidad y rollback automático.',
+          'Ingeniería del caos en GKE: latencia inyectada y medida con k6 y Chaos Toolkit, mitigada con timeouts, circuit breaker y degradación elegante, y controlada en CI/CD.',
+          'Game day de seguridad: tokens efímeros firmados, reglas de detección como código, copias aisladas con retención y contención con aprobación humana.',
           'Flujo de Git con ramas de funcionalidad, pull requests y commits con GitMoji.',
         ],
         decisions: [
