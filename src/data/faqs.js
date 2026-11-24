@@ -61,7 +61,7 @@ export const FAQS = [
   {
     id: 'ai',
     route: '/skills',
-    keywords: ['ai', 'artificial', 'machine learning', 'ml', 'intelligence', 'agent', 'langchain', 'model', 'data', 'ia', 'inteligencia', 'aprendizaje', 'agente', 'modelo', 'datos', 'llm', 'openai', 'tensorflow', 'pandas', 'deep learning', 'neural', 'airflow', 'etl', 'red neuronal'],
+    keywords: ['ai', 'artificial', 'machine learning', 'ml', 'intelligence', 'agent', 'langchain', 'model', 'data', 'ia', 'inteligencia', 'aprendizaje', 'agente', 'modelo', 'datos', 'llm', 'openai', 'tensorflow', 'pandas', 'deep learning', 'neural', 'nlp', 'bert', 'sentiment', 'transformer', 'hugging', 'sentimiento', 'airflow', 'etl', 'red neuronal'],
   },
   {
     id: 'location',

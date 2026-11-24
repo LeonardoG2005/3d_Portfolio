@@ -68,6 +68,7 @@ export const SKILL_GROUPS = [
       'NumPy',
       'Scikit-learn',
       'TensorFlow',
+      'Hugging Face Transformers',
       'Jupyter',
       'Power BI',
       'Apache Airflow',

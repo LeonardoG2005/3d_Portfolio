@@ -396,7 +396,7 @@ export default {
       cv: 'You can download his CV in English or Spanish from the Contact page, or from the menu.',
       contact: 'Email him at leosowilo2005@gmail.com or message him on LinkedIn (leotuvstarr). Both links are on the Contact page.',
       cloud: 'In the Medical Documents API project he deployed a Fastify API on GKE with autoscaling and health probes, an orchestrator on Cloud Run with Pub/Sub, infrastructure with Terraform, CI/CD pipelines, canary releases with automatic rollback and observability with OpenTelemetry and Grafana, in a system that spans GCP, AWS and OCI.',
-      ai: 'Yes. He completed the Machine Learning Specialization by DeepLearning.AI, works with Pandas, NumPy, Scikit-learn and TensorFlow, and built a bank marketing classifier comparing Logistic Regression and SVM with cross-validation. He has also worked with LangChain, LangGraph, the OpenAI SDK and MCP for agent tooling.',
+      ai: 'Yes. He completed the Machine Learning Specialization by DeepLearning.AI, works with Pandas, NumPy, Scikit-learn and TensorFlow, and fine-tuned BETO, a Spanish BERT model, with Hugging Face Transformers to classify Amazon reviews by sentiment (93.9% accuracy on positive versus negative). He has also worked with LangChain, LangGraph, the OpenAI SDK and MCP for agent tooling.',
       location: 'He is based in Medellín, Colombia.',
       site: 'This portfolio is built with React, Vite, Tailwind CSS and Three.js through React Three Fiber. The room renders with WebGPU when the browser supports it, falls back to WebGL 2, and there is a simple 2D version for everything else.',
       greeting: 'Hello! Ask me anything about Leonardo, or pick one of the suggested questions.',
