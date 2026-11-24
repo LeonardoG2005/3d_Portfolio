@@ -70,6 +70,7 @@ export const SKILL_GROUPS = [
       'TensorFlow',
       'Jupyter',
       'Power BI',
+      'Apache Airflow',
       'Supervised learning',
       'Unsupervised learning',
     ],

@@ -92,7 +92,7 @@ export default {
     title: 'About',
     subtitle: 'Software Engineering student in Medellín, building things that run in production.',
     paragraphs: [
-      'I am Leonardo, a Software Engineering student at Universidad de Medellín (ninth semester) with 5 years of hands-on experience in software development through academic, personal and applied projects.',
+      'I am Leonardo, a Software Engineering student at Universidad de Medellín (tenth semester) with 5 years of hands-on experience in software development through academic, personal and applied projects.',
       'I work across the stack, but what I enjoy most is backend engineering and data-centric systems: APIs, databases, cloud infrastructure and the pipelines that connect them. I care about clean code, clear architecture and decisions that can be explained.',
       'One of my projects, FluxLab, is a laboratory information management system that the Biotechnology Laboratory at Universidad de Medellín uses today. Building something that real people depend on taught me more than any course.',
       'Outside university I study machine learning and data engineering. I completed the Machine Learning Specialization by DeepLearning.AI and the Data Engineer in Python track at DataCamp, and I hold an IELTS Academic certificate at C1 level.',
@@ -133,7 +133,7 @@ export default {
 
   projects: {
     title: 'Projects',
-    subtitle: 'Systems I designed and built, alone or with a team.',
+    subtitle: 'Projects I designed and built.',
     view: 'View project',
     back: 'All projects',
     live: 'Live demo',
@@ -288,7 +288,7 @@ export default {
         period: 'July 2022 to present',
         title: 'Software Engineering',
         place: 'Universidad de Medellín, Colombia',
-        text: 'Ninth semester. Coursework in algorithms and data structures, object-oriented design, databases, networks, software architecture, testing, security, web and mobile development, and DevOps.',
+        text: 'Tenth semester. Coursework in algorithms and data structures, object-oriented design, databases, networks, software architecture, testing, security, web and mobile development, DevOps and others.',
       },
       ielts: {
         period: 'Certificate',
@@ -306,7 +306,7 @@ export default {
         period: 'Certificate',
         title: 'Data Engineer in Python career track',
         place: 'DataCamp',
-        text: 'Practical data engineering: processing and transforming data with Pandas and SQL, and building data workflows over structured datasets.',
+        text: 'Practical data engineering: processing and transforming data with Pandas and SQL, building data workflows, and ETL and ELT pipelines automated with Apache Airflow.',
       },
     },
   },
@@ -386,12 +386,12 @@ export default {
       ai: 'Does he have experience with AI?',
     },
     answers: {
-      who: 'Leonardo Guevara Atehortúa is a Software Engineering student at Universidad de Medellín, in his ninth semester, based in Medellín, Colombia. He works across the stack with a strong interest in backend, data and cloud systems.',
+      who: 'Leonardo Guevara Atehortúa is a Software Engineering student at Universidad de Medellín, in his tenth semester, based in Medellín, Colombia. He works across the stack with a strong interest in backend, data and cloud systems.',
       tech: 'His main tools are Python, TypeScript, JavaScript and SQL, with NestJS, Node.js and Django on the backend and React and Angular on the frontend. He also works with PostgreSQL, Docker, Kubernetes, Google Cloud, Terraform, Pandas, Scikit-learn and LangChain. The Skills page has the full list.',
       projects: 'Four projects are featured here: FluxLab (a lab management system used at Universidad de Medellín), FocusHub (a productivity platform), the Medical Documents API (a multicloud DevOps project) and Ergonominador (an IoT posture monitor).',
       experience: 'He has 5 years of hands-on experience in software development through academic, personal and applied projects. His experience comes from projects rather than formal jobs. The most applied one is FluxLab, which the Biotechnology Laboratory at Universidad de Medellín uses daily.',
       english: 'C1, certified through IELTS Academic. Spanish is his native language.',
-      education: 'He studies Software Engineering at Universidad de Medellín (since July 2022, ninth semester). He also completed the Machine Learning Specialization by DeepLearning.AI and the Data Engineer in Python career track at DataCamp.',
+      education: 'He studies Software Engineering at Universidad de Medellín (since July 2022, tenth semester). He also completed the Machine Learning Specialization by DeepLearning.AI and the Data Engineer in Python career track at DataCamp.',
       availability: 'The best way to find out is to ask him directly. You can write to him by email or LinkedIn from the Contact page and he will get back to you.',
       cv: 'You can download his CV in English or Spanish from the Contact page, or from the menu.',
       contact: 'Email him at leosowilo2005@gmail.com or message him on LinkedIn (leotuvstarr). Both links are on the Contact page.',

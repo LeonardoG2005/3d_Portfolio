@@ -92,7 +92,7 @@ export default {
     title: 'Sobre mí',
     subtitle: 'Estudiante de Ingeniería de Software en Medellín que construye cosas que llegan a producción.',
     paragraphs: [
-      'Soy Leonardo, estudiante de Ingeniería de Software en la Universidad de Medellín (noveno semestre), con 5 años de experiencia práctica en desarrollo de software a través de proyectos académicos, personales y aplicados.',
+      'Soy Leonardo, estudiante de Ingeniería de Software en la Universidad de Medellín (décimo semestre), con 5 años de experiencia práctica en desarrollo de software a través de proyectos académicos, personales y aplicados.',
       'Trabajo en todo el stack, pero lo que más disfruto es la ingeniería de backend y los sistemas centrados en datos: APIs, bases de datos, infraestructura en la nube y los flujos que los conectan. Me importan el código limpio, una arquitectura clara y las decisiones que se pueden explicar.',
       'Uno de mis proyectos, FluxLab, es un sistema de gestión de información de laboratorio que hoy usa el Laboratorio de Biotecnología de la Universidad de Medellín. Construir algo de lo que dependen personas reales me enseñó más que cualquier curso.',
       'Fuera de la universidad estudio aprendizaje automático e ingeniería de datos. Completé la Machine Learning Specialization de DeepLearning.AI y la ruta Data Engineer in Python de DataCamp, y tengo un certificado IELTS Academic de nivel C1.',
@@ -133,7 +133,7 @@ export default {
 
   projects: {
     title: 'Proyectos',
-    subtitle: 'Sistemas que diseñé y construí, solo o en equipo.',
+    subtitle: 'Proyectos que diseñé y construí.',
     view: 'Ver proyecto',
     back: 'Todos los proyectos',
     live: 'Demo en vivo',
@@ -288,7 +288,7 @@ export default {
         period: 'Julio de 2022 a la actualidad',
         title: 'Ingeniería de Software',
         place: 'Universidad de Medellín, Colombia',
-        text: 'Noveno semestre. Cursos de algoritmos y estructuras de datos, diseño orientado a objetos, bases de datos, redes, arquitectura de software, pruebas, seguridad, desarrollo web y móvil, y DevOps.',
+        text: 'Décimo semestre. Cursos de algoritmos y estructuras de datos, diseño orientado a objetos, bases de datos, redes, arquitectura de software, pruebas, seguridad, desarrollo web y móvil, DevOps, entre otros.',
       },
       ielts: {
         period: 'Certificado',
@@ -306,7 +306,7 @@ export default {
         period: 'Certificado',
         title: 'Ruta Data Engineer in Python',
         place: 'DataCamp',
-        text: 'Ingeniería de datos práctica: procesamiento y transformación de datos con Pandas y SQL, y construcción de flujos de trabajo sobre conjuntos de datos estructurados.',
+        text: 'Ingeniería de datos práctica: procesamiento y transformación de datos con Pandas y SQL, construcción de flujos de trabajo y pipelines ETL y ELT automatizados con Apache Airflow.',
       },
     },
   },
@@ -338,7 +338,7 @@ export default {
 
   contact: {
     title: 'Contacto',
-    subtitle: 'La forma más rápida de encontrarme es por correo o LinkedIn.',
+    subtitle: 'La forma más rápida de contactarme es por correo o LinkedIn.',
     email: 'Correo',
     email_action: 'Envíame un correo',
     copy: 'Copiar dirección',
@@ -386,12 +386,12 @@ export default {
       ai: '¿Tiene experiencia con inteligencia artificial?',
     },
     answers: {
-      who: 'Leonardo Guevara Atehortúa es estudiante de Ingeniería de Software en la Universidad de Medellín, cursa noveno semestre y vive en Medellín, Colombia. Trabaja en todo el stack, con especial interés en backend, datos y sistemas en la nube.',
+      who: 'Leonardo Guevara Atehortúa es estudiante de Ingeniería de Software en la Universidad de Medellín, cursa décimo semestre y vive en Medellín, Colombia. Trabaja en todo el stack, con especial interés en backend, datos y sistemas en la nube.',
       tech: 'Sus herramientas principales son Python, TypeScript, JavaScript y SQL, con NestJS, Node.js y Django en el backend y React y Angular en el frontend. También trabaja con PostgreSQL, Docker, Kubernetes, Google Cloud, Terraform, Pandas, Scikit-learn y LangChain. La lista completa está en la página de Habilidades.',
       projects: 'Aquí se destacan cuatro proyectos: FluxLab (un sistema de gestión de laboratorio en uso en la Universidad de Medellín), FocusHub (una plataforma de productividad), Medical Documents API (un proyecto DevOps multicloud) y Ergonominador (un monitor de postura IoT).',
       experience: 'Tiene 5 años de experiencia práctica en desarrollo de software a través de proyectos académicos, personales y aplicados. Su experiencia viene de proyectos más que de empleos formales. El más aplicado es FluxLab, que el Laboratorio de Biotecnología de la Universidad de Medellín usa a diario.',
       english: 'C1, certificado mediante IELTS Academic. El español es su lengua materna.',
-      education: 'Estudia Ingeniería de Software en la Universidad de Medellín (desde julio de 2022, noveno semestre). Además completó la Machine Learning Specialization de DeepLearning.AI y la ruta Data Engineer in Python de DataCamp.',
+      education: 'Estudia Ingeniería de Software en la Universidad de Medellín (desde julio de 2022, décimo semestre). Además completó la Machine Learning Specialization de DeepLearning.AI y la ruta Data Engineer in Python de DataCamp.',
       availability: 'Lo mejor es preguntarle directamente. Puedes escribirle por correo o LinkedIn desde la página de Contacto y te responderá.',
       cv: 'Puedes descargar su CV en inglés o en español desde la página de Contacto, o desde el menú.',
       contact: 'Escríbele a leosowilo2005@gmail.com o envíale un mensaje por LinkedIn (leotuvstarr). Ambos enlaces están en la página de Contacto.',
