@@ -62,7 +62,7 @@ export function heatmapTexture(levels) {
   ctx.fillRect(0, 0, 512, 320);
   const originX = (512 - (columns * (cell + gap) - gap)) / 2;
   const originY = 74;
-  // Octocat-free header: a small bar chart glyph and a title strip.
+  // Header: a small bar chart glyph and a title strip.
   ctx.fillStyle = '#36d463';
   [10, 18, 13, 24].forEach((height, i) => ctx.fillRect(originX + i * 9, 48 - height, 6, height));
   ctx.fillStyle = '#2a3a30';

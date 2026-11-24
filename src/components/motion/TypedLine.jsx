@@ -13,11 +13,8 @@ function pause(char) {
   return 0.026 + jitter;
 }
 
-// A line set like a code comment that is typed out in front of the reader, with a block cursor.
-// Every letter is in the page from the start (only hidden), so the text keeps its place while it
-// is typed and nothing shifts. Screen readers get the whole sentence through aria-label.
-// With reduced motion, or without JavaScript, the full line is simply shown.
-// `whenVisible` starts the typing when the line scrolls into view instead of after `delay`.
+// A code-comment line typed out with a block cursor. Letters are only hidden, never added, so nothing
+// shifts while typing. `whenVisible` waits until the line scrolls into view instead of using `delay`.
 export default function TypedLine({ text, className = '', delay = 1.05, whenVisible = false }) {
   const root = useRef(null);
   const sentence = String(text);
@@ -39,7 +36,6 @@ export default function TypedLine({ text, className = '', delay = 1.05, whenVisi
         line.classList.add('is-typing');
         prefix.classList.add('typed-cursor');
 
-        // Hero lines start shortly after the page arrives; lines further down wait until they are seen.
         const timeline = whenVisible
           ? gsap.timeline({ scrollTrigger: { trigger: line, start: 'top 88%', once: true } })
           : gsap.timeline({ delay });

@@ -1,9 +1,6 @@
 import { getProject } from '../../data/projects.js';
 
-// The four orbs of the reference scene, with its numbers kept exactly as they are in
-// webfolio-main/src/components/Scene.tsx: sphere radius and scale, the distort and speed of the
-// material, the Float wrapper's speed and intensity, and the rotation and path of each sphere.
-// Units are the reference's world units; the engine converts them to the screen.
+// The four orbs in world units; the engine converts them to the screen.
 export const ORBS = [
   {
     radius: 1,

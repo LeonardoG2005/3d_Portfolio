@@ -150,8 +150,7 @@ export default function RoomHud({ ready, struggling }) {
         </div>
       </div>
 
-      {/* Floating label, positioned every frame by LabelProjector. Clicking it does what E does;
-          it stays out of the tab order because the destinations list below covers keyboards. */}
+      {/* Floating label positioned by LabelProjector. Clicking it does what E does; keyboards use the list below. */}
       <div
         ref={label}
         aria-hidden="true"

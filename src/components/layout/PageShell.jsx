@@ -86,10 +86,8 @@ export function NextBand({ to, label, name }) {
   );
 }
 
-// Shared frame for every content page: document title, hero, entrance animation, page transition and closing band.
-// `page` is the route id (used for the closing "next" link); `compact` renders the h1 as a small label
-// for pages whose own content is the headline; `backdrop` sits behind the hero and `hero` adds content inside it;
-// `closing` replaces the next band.
+// Shared frame for every content page. `page` is the route id for the "next" link; `compact` renders the h1
+// as a small label; `backdrop` sits behind the hero, `hero` adds content inside it, `closing` replaces the next band.
 export default function PageShell({ title, subtitle, eyebrow, page, compact = false, backdrop, hero, closing, children }) {
   const t = useT();
   const root = useRef(null);

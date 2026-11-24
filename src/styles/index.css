@@ -128,7 +128,7 @@ a {
   text-decoration-thickness: 2px;
 }
 
-/* Card with a pointer-following edge glow (idea adapted from the BorderGlow sample). */
+/* Card with a pointer-following edge glow. */
 .card {
   position: relative;
   background: var(--surface);

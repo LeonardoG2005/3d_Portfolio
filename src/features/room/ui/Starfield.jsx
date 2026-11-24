@@ -1,9 +1,7 @@
 import { useEffect, useRef } from 'react';
 
-// Twinkling stars drawn on a plain 2D canvas that sits behind the transparent 3D canvas.
-// The room's floor and walls are solid, so the stars only show in the empty space around it.
-// It redraws a few times per second (twinkling needs no more), stops in a hidden tab,
-// and is a still picture under reduced motion.
+// Stars on a 2D canvas behind the transparent 3D canvas, so they only show around the room.
+// A few redraws per second are enough for twinkling.
 export default function Starfield({ theme }) {
   const ref = useRef(null);
 

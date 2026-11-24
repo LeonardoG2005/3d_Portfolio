@@ -15,8 +15,7 @@ const ICONS = {
   contact: Mail,
 };
 
-// Timing and motion follow the reference navbar: blur fades in, items rise in with a staggered spring,
-// and on hover an item grows slightly and slides right while its underline extends.
+// Blur fades in, items rise with a staggered spring; on hover an item grows and slides right as its underline extends.
 const scrim = {
   closed: { opacity: 0, transition: { duration: 0.3 } },
   open: { opacity: 1, transition: { duration: 0.4 } },
@@ -131,7 +130,7 @@ export default function OverlayMenu({ open, onClose }) {
                         </m.span>
                         <span>{t(`nav.${route.id}`)}</span>
                       </NavLink>
-                      {/* Underline in the text colour, as in the reference: on for the current page, grows on hover */}
+                      {/* On for the current page, grows on hover */}
                       <m.span
                         aria-hidden="true"
                         variants={underline(active)}
