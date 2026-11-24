@@ -1,8 +1,6 @@
 import { useRef } from 'react';
 import { MOTION_OK, gsap, useGSAP } from '../../lib/gsap.js';
 
-const PREFIX = '//';
-
 // How long to wait after each character, in seconds: a quick, slightly uneven rhythm
 // with a breath after commas and a longer one after full stops, like someone typing.
 function pause(char) {
@@ -15,7 +13,7 @@ function pause(char) {
 
 // A code-comment line typed out with a block cursor. Letters are only hidden, never added, so nothing
 // shifts while typing. `whenVisible` waits until the line scrolls into view instead of using `delay`.
-export default function TypedLine({ text, className = '', delay = 1.05, whenVisible = false }) {
+export default function TypedLine({ text, prefix = '//', className = '', delay = 1.05, whenVisible = false }) {
   const root = useRef(null);
   const sentence = String(text);
 
@@ -74,7 +72,7 @@ export default function TypedLine({ text, className = '', delay = 1.05, whenVisi
   return (
     <p ref={root} aria-label={sentence} className={`typed ${className}`}>
       <span aria-hidden="true">
-        <span className="typed-prefix">{PREFIX}</span>{' '}
+        <span className="typed-prefix">{prefix}</span>{' '}
         {sentence.split(' ').map((word, wordIndex) => (
           <span key={`${wordIndex}-${word}`}>
             <span className="typed-word">

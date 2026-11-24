@@ -1,9 +1,8 @@
-import { ArrowRight } from 'lucide-react';
 import { useRef } from 'react';
-import { Link } from 'react-router';
 import PageShell from '../components/layout/PageShell.jsx';
 import Icon from '../components/ui/Icon.jsx';
 import PythonMark from '../components/ui/PythonMark.jsx';
+import TerminalLink from '../components/ui/TerminalLink.jsx';
 import { JOURNEY } from '../data/journey.js';
 import { useT } from '../i18n/index.jsx';
 import { MOTION_OK, ScrollTrigger, gsap, useGSAP } from '../lib/gsap.js';
@@ -116,10 +115,9 @@ export default function Journey() {
                   <p className="serif mt-3 text-2xl text-muted sm:text-3xl">{copy.place}</p>
                   <p className="mt-6 max-w-xl text-lg leading-relaxed">{copy.text}</p>
                   {entry.link && (
-                    <Link to={entry.link} className="link mt-6 inline-flex items-center gap-1 text-lg">
+                    <TerminalLink to={entry.link} className="mt-8">
                       {t('journey.see_projects')}
-                      <ArrowRight size={18} aria-hidden="true" />
-                    </Link>
+                    </TerminalLink>
                   )}
                 </div>
               </li>

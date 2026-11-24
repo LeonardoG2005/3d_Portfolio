@@ -121,9 +121,12 @@ export default function Contact() {
       <section className="shell grid gap-x-12 gap-y-12 py-16 sm:py-24 lg:grid-cols-12">
         <div data-reveal className="lg:col-span-6">
           <h2 className="label mb-4">{t('contact.cv_title')}</h2>
-          <p className="serif mb-6 text-3xl text-muted">
-            {cv.ready && cv.items.length === 0 ? t('contact.cv_missing') : t('contact.cv_text')}
-          </p>
+          <TypedLine
+            text={cv.ready && cv.items.length === 0 ? t('contact.cv_missing') : t('contact.cv_text')}
+            prefix={<>leo@portfolio<span className="text-muted">:</span><span className="typed-path">~/cv</span><span className="text-muted">$</span></>}
+            className="typed-shell mb-6"
+            whenVisible
+          />
           <div className="flex flex-wrap gap-3">
             {cv.items.map((file) => (
               <ButtonLink
