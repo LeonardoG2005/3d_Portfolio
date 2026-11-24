@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { Link } from 'react-router';
 import PageShell from '../components/layout/PageShell.jsx';
 import Icon from '../components/ui/Icon.jsx';
+import PythonMark from '../components/ui/PythonMark.jsx';
 import { JOURNEY } from '../data/journey.js';
 import { useT } from '../i18n/index.jsx';
 import { MOTION_OK, ScrollTrigger, gsap, useGSAP } from '../lib/gsap.js';
@@ -103,7 +104,7 @@ export default function Journey() {
                     left ? 'left-0' : 'right-0'
                   }`}
                 >
-                  {entry.mark}
+                  {entry.logo === 'python' ? <PythonMark className="h-[0.82em] w-[0.82em]" /> : entry.mark}
                 </p>
 
                 <div className={`station-text w-full lg:w-[52%] ${left ? 'lg:ml-[40%]' : 'lg:mr-[40%] lg:ml-[4%]'}`}>
