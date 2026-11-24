@@ -92,12 +92,12 @@ function Marker({ item }) {
     <>
       <mesh ref={mesh} position={item.label}>
         <octahedronGeometry args={[0.075, 0]} />
-        <meshBasicMaterial ref={material} color="#4dff86" transparent opacity={0.55} toneMapped={false} />
+        <meshBasicMaterial ref={material} color="#b48cff" transparent opacity={0.55} toneMapped={false} />
       </mesh>
       {/* Ring on the floor where the character will stand */}
       <mesh ref={ring} position={[item.approach.x, 0.012, item.approach.z]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.3, 0.36, 28]} />
-        <meshBasicMaterial color="#2fce5b" transparent opacity={0} depthWrite={false} toneMapped={false} />
+        <meshBasicMaterial color="#8f63ff" transparent opacity={0} depthWrite={false} toneMapped={false} />
       </mesh>
     </>
   );
