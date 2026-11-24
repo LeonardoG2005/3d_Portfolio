@@ -45,7 +45,7 @@ export const PROJECTS = [
   {
     slug: 'medical-documents-api',
     accent: '#c98a1a',
-    cover: null,
+    cover: 'images/projects/medical-documents-api/cover.webp',
     gallery: [],
     tech: [
       'Node.js',
