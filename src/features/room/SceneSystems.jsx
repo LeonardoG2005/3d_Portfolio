@@ -98,7 +98,7 @@ function Marker({ item, theme }) {
   return (
     <>
       <mesh ref={mesh} position={item.label}>
-        <octahedronGeometry args={[0.075, 0]} />
+        <octahedronGeometry args={[0.088, 0]} />
         <meshBasicMaterial ref={material} color={colors.diamond} transparent opacity={colors.rest} toneMapped={false} />
       </mesh>
       {/* Ring on the floor where the character will stand */}
