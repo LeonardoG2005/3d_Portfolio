@@ -194,7 +194,7 @@ export default function RoomExperience({ theme, rendererPref, onNavigate, onFail
             <CameraRig />
             <Environment theme={theme} shadows={!lowQuality} />
             <Character />
-            <Interactables />
+            <Interactables theme={theme} />
             <ClickFloor />
             <LabelProjector />
             <PerformanceWatch onDowngrade={() => setLowQuality(true)} onStruggle={() => setStruggling(true)} />
