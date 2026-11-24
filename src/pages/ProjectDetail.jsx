@@ -122,7 +122,7 @@ export default function ProjectDetail() {
         </div>
 
         <div className="cover-frame">
-          <div className="cover-clip h-[min(86vh,58vw)] min-h-[15rem] overflow-hidden bg-raised">
+          <div className={`cover-clip overflow-hidden bg-raised ${project.coverWhole ? 'aspect-[16/10]' : 'h-[min(86vh,58vw)] min-h-[15rem]'}`}>
             <SmartImage
               src={project.cover}
               name={copy.name}
